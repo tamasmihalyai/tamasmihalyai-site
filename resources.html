@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free AI Resource Library – Tamas Mihaly AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark:   #1a202c;
+      --dark-2: #232b3a;
+      --white:  #ffffff;
+      --cyan:   #00bcd4;
+      --lav:    #a6b6f8;
+      --body:   rgba(255,255,255,0.68);
+      --muted:  rgba(255,255,255,0.32);
+      --bdr:    rgba(255,255,255,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 48px 28px 80px;
+    }
+
+    @media (max-width: 480px) {
+      .page { padding: 36px 20px 64px; }
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 48px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--lav); }
+
+    /* Section label */
+    .label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lav);
+      margin-bottom: 14px;
+    }
+
+    /* Separator */
+    .sep { height: 1px; background: var(--bdr); margin: 40px 0; }
+
+    /* Hero */
+    .hero { margin-bottom: 32px; }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 em {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cyan);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    /* Social proof */
+    .social-proof {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--muted);
+      margin-top: 14px;
+      line-height: 1.55;
+    }
+
+    /* ConvertKit form wrapper */
+    .ck-wrap {
+      background: var(--dark-2);
+      border: 1px solid rgba(0,188,212,0.18);
+      border-radius: 16px;
+      padding: 26px 24px;
+      margin-bottom: 8px;
+    }
+
+    /* What's inside */
+    .inside-intro {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 480px) {
+      .category-grid { grid-template-columns: 1fr; }
+    }
+
+    .cat-card {
+      background: var(--dark-2);
+      border: 1px solid var(--bdr);
+      border-radius: 12px;
+      padding: 18px 18px 16px;
+      transition: border-color 0.2s, transform 0.18s;
+    }
+
+    .cat-card:hover {
+      border-color: rgba(166,182,248,0.25);
+      transform: translateY(-2px);
+    }
+
+    .cat-icon {
+      font-size: 20px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .cat-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+
+    .cat-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* For you section */
+    .for-you {
+      background: var(--dark-2);
+      border: 1px solid var(--bdr);
+      border-radius: 16px;
+      padding: 26px 24px;
+    }
+
+    .for-you p {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+    }
+
+    .for-you .updated-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cyan);
+      background: rgba(0,188,212,0.1);
+      border: 1px solid rgba(0,188,212,0.2);
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+
+    .updated-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+    }
+
+    /* Final CTA section */
+    .final-cta { text-align: center; }
+
+    .final-cta h2 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .final-cta .sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .final-cta .sub span {
+      color: var(--body);
+    }
+
+    /* Override ConvertKit form styles to match brand */
+    .formkit-form {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+    }
+
+    .formkit-form * {
+      font-family: 'Inter', sans-serif !important;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Back link -->
+  <a href="https://tamasmihalyai.vercel.app" class="back-link">
+    ← Back to tamasmihalyai.vercel.app
+  </a>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="label">Free Resource</div>
+    <h1>Get free access to my <em>AI Resource Library</em></h1>
+    <p>Stop digging through saved posts, old links, and random prompt lists. This is everything practical I have built, tested, and used across real marketing and business work — in one searchable library.</p>
+  </div>
+
+  <!-- Hero ConvertKit Form -->
+  <div class="ck-wrap">
+    <script async data-uid="8ae0ef2c3f" src="https://tamas-mihaly-ai.kit.com/8ae0ef2c3f/index.js"></script>
+  </div>
+
+  <!-- Social proof -->
+  <p class="social-proof">✦ Resources from content watched by 500k+ marketers and business owners</p>
+
+  <div class="sep"></div>
+
+  <!-- What's inside -->
+  <div class="label">What's inside</div>
+  <p class="inside-intro">40+ prompts, workflows, playbooks, SOPs, and AI assistants — organised by type and topic so you can find what you need and use it straight away.</p>
+
+  <div class="category-grid">
+
+    <div class="cat-card">
+      <span class="cat-icon">⚙️</span>
+      <div class="cat-title">AI Foundations</div>
+      <div class="cat-desc">Build systems you can actually reuse, not just open the tool and hope for the best.</div>
+    </div>
+
+    <div class="cat-card">
+      <span class="cat-icon">✍️</span>
+      <div class="cat-title">Content &amp; Social</div>
+      <div class="cat-desc">Create better content with AI without it sounding like everyone else's.</div>
+    </div>
+
+    <div class="cat-card">
+      <span class="cat-icon">🔍</span>
+      <div class="cat-title">SEO &amp; Website</div>
+      <div class="cat-desc">Stronger pages, clearer website thinking, better search visibility.</div>
+    </div>
+
+    <div class="cat-card">
+      <span class="cat-icon">📣</span>
+      <div class="cat-title">PPC &amp; Paid Ads</div>
+      <div class="cat-desc">Bring more structure to paid media and campaign work.</div>
+    </div>
+
+    <div class="cat-card">
+      <span class="cat-icon">🔬</span>
+      <div class="cat-title">Research &amp; Analysis</div>
+      <div class="cat-desc">Turn scattered information into something you can actually use.</div>
+    </div>
+
+    <div class="cat-card">
+      <span class="cat-icon">📊</span>
+      <div class="cat-title">Reporting &amp; Client Work</div>
+      <div class="cat-desc">Spend less time preparing for conversations and more time having them.</div>
+    </div>
+
+    <div class="cat-card">
+      <span class="cat-icon">🎬</span>
+      <div class="cat-title">Visual &amp; Video</div>
+      <div class="cat-desc">Create better visuals and creative assets with more structure behind them.</div>
+    </div>
+
+    <div class="cat-card">
+      <span class="cat-icon">🏗️</span>
+      <div class="cat-title">Business &amp; Team Systems</div>
+      <div class="cat-desc">Embed AI into how work actually gets done across your team.</div>
+    </div>
+
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- This is for you if -->
+  <div class="label">This is for you if</div>
+  <div class="for-you">
+    <p>You are juggling more than one area of marketing or business. You have had a go with AI, it has not quite clicked yet, and you want practical resources from someone who uses this stuff in real work every day.</p>
+    <div class="updated-badge">
+      <span class="updated-dot"></span>
+      Updated weekly
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Final CTA -->
+  <div class="final-cta">
+    <div class="label" style="text-align:center;">Get the library</div>
+    <h2>Get the free AI Resource Library</h2>
+    <p class="sub"><span>Built from real work.</span> &nbsp;·&nbsp; <span>Updated weekly.</span> &nbsp;·&nbsp; <span>Free.</span></p>
+
+    <div class="ck-wrap">
+      <script async data-uid="8ae0ef2c3f" src="https://tamas-mihaly-ai.kit.com/8ae0ef2c3f/index.js"></script>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

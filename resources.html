@@ -90,6 +90,11 @@
       margin-bottom: 28px;
     }
 
+    .hero p strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
     /* Social proof */
     .social-proof {
       font-size: 12px;
@@ -99,13 +104,95 @@
       line-height: 1.55;
     }
 
-    /* ConvertKit form wrapper */
+    /* ConvertKit wrapper */
     .ck-wrap {
       background: var(--dark-2);
       border: 1px solid rgba(0,188,212,0.18);
       border-radius: 16px;
       padding: 26px 24px;
       margin-bottom: 8px;
+    }
+
+    /* Kit overrides — match brand exactly */
+    .kit-override { position: relative; }
+
+    .kit-override .formkit-form,
+    .kit-override [data-style="full"] {
+      background: transparent !important;
+      padding: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .kit-override .formkit-field {
+      margin-bottom: 8px !important;
+    }
+
+    .kit-override .formkit-input {
+      background: rgba(255,255,255,0.07) !important;
+      border: 1px solid rgba(255,255,255,0.14) !important;
+      border-radius: 8px !important;
+      color: #ffffff !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 13px !important;
+      padding: 11px 15px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      outline: none !important;
+      -webkit-text-fill-color: #ffffff !important;
+    }
+
+    .kit-override .formkit-input:focus {
+      border-color: rgba(0,188,212,0.5) !important;
+      background: rgba(255,255,255,0.09) !important;
+    }
+
+    .kit-override .formkit-input::placeholder {
+      color: rgba(255,255,255,0.28) !important;
+      -webkit-text-fill-color: rgba(255,255,255,0.28) !important;
+    }
+
+    .kit-override .formkit-submit,
+    .kit-override [data-element="submit"] button {
+      background: #00bcd4 !important;
+      color: #1a202c !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      padding: 11px 20px !important;
+      border-radius: 8px !important;
+      border: none !important;
+      cursor: pointer !important;
+      width: 100% !important;
+      margin-top: 6px !important;
+      letter-spacing: -0.01em !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .kit-override .formkit-submit:hover { opacity: 0.85 !important; }
+
+    .kit-override .formkit-guarantee {
+      color: rgba(255,255,255,0.28) !important;
+      font-size: 11px !important;
+      font-family: 'Inter', sans-serif !important;
+      text-align: center !important;
+      margin-top: 10px !important;
+    }
+
+    /* Hide "Built with Kit" */
+    .kit-override .formkit-powered-by-convertkit-container,
+    .kit-override .formkit-powered-by-convertkit {
+      display: none !important;
+    }
+
+    .kit-override .formkit-alert {
+      background: rgba(0,188,212,0.1) !important;
+      border: 1px solid rgba(0,188,212,0.25) !important;
+      color: #00bcd4 !important;
+      border-radius: 8px !important;
+      padding: 12px 16px !important;
+      font-size: 13px !important;
+      font-family: 'Inter', sans-serif !important;
     }
 
     /* What's inside */
@@ -140,9 +227,23 @@
     }
 
     .cat-icon {
-      font-size: 20px;
-      margin-bottom: 10px;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 12px;
+      color: var(--lav);
+    }
+
+    .cat-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .cat-title {
@@ -214,17 +315,6 @@
     .final-cta .sub span {
       color: var(--body);
     }
-
-    /* Override ConvertKit form styles to match brand */
-    .formkit-form {
-      background: transparent !important;
-      border: none !important;
-      padding: 0 !important;
-    }
-
-    .formkit-form * {
-      font-family: 'Inter', sans-serif !important;
-    }
   </style>
 </head>
 <body>
@@ -232,19 +322,21 @@
 
   <!-- Back link -->
   <a href="https://tamasmihalyai.vercel.app" class="back-link">
-    ← Back to tamasmihalyai.vercel.app
+    ← Back to the start here page
   </a>
 
   <!-- Hero -->
   <div class="hero">
     <div class="label">Free Resource</div>
     <h1>Get free access to my <em>AI Resource Library</em></h1>
-    <p>Stop digging through saved posts, old links, and random prompt lists. This is everything practical I have built, tested, and used across real marketing and business work — in one searchable library.</p>
+    <p>Stop digging through saved posts, old links, and random prompt lists. <strong>This is everything practical I have built, tested, and used across real marketing and business work — in one searchable library.</strong></p>
   </div>
 
   <!-- Hero ConvertKit Form -->
   <div class="ck-wrap">
-    <script async data-uid="8ae0ef2c3f" src="https://tamas-mihaly-ai.kit.com/8ae0ef2c3f/index.js"></script>
+    <div class="kit-override">
+      <script async data-uid="8ae0ef2c3f" src="https://tamas-mihaly-ai.kit.com/8ae0ef2c3f/index.js"></script>
+    </div>
   </div>
 
   <!-- Social proof -->
@@ -259,49 +351,73 @@
   <div class="category-grid">
 
     <div class="cat-card">
-      <span class="cat-icon">⚙️</span>
+      <div class="cat-icon">
+        <!-- CPU / foundations -->
+        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>
+      </div>
       <div class="cat-title">AI Foundations</div>
       <div class="cat-desc">Build systems you can actually reuse, not just open the tool and hope for the best.</div>
     </div>
 
     <div class="cat-card">
-      <span class="cat-icon">✍️</span>
+      <div class="cat-icon">
+        <!-- Edit / content -->
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </div>
       <div class="cat-title">Content &amp; Social</div>
       <div class="cat-desc">Create better content with AI without it sounding like everyone else's.</div>
     </div>
 
     <div class="cat-card">
-      <span class="cat-icon">🔍</span>
+      <div class="cat-icon">
+        <!-- Search / SEO -->
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
       <div class="cat-title">SEO &amp; Website</div>
       <div class="cat-desc">Stronger pages, clearer website thinking, better search visibility.</div>
     </div>
 
     <div class="cat-card">
-      <span class="cat-icon">📣</span>
+      <div class="cat-icon">
+        <!-- Target / ads -->
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </div>
       <div class="cat-title">PPC &amp; Paid Ads</div>
       <div class="cat-desc">Bring more structure to paid media and campaign work.</div>
     </div>
 
     <div class="cat-card">
-      <span class="cat-icon">🔬</span>
+      <div class="cat-icon">
+        <!-- Bar chart / analysis -->
+        <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      </div>
       <div class="cat-title">Research &amp; Analysis</div>
       <div class="cat-desc">Turn scattered information into something you can actually use.</div>
     </div>
 
     <div class="cat-card">
-      <span class="cat-icon">📊</span>
+      <div class="cat-icon">
+        <!-- Clipboard / reporting -->
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      </div>
       <div class="cat-title">Reporting &amp; Client Work</div>
       <div class="cat-desc">Spend less time preparing for conversations and more time having them.</div>
     </div>
 
     <div class="cat-card">
-      <span class="cat-icon">🎬</span>
+      <div class="cat-icon">
+        <!-- Play / video -->
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="m10 8 5 3-5 3V8zM8 21h8M12 17v4"/></svg>
+      </div>
       <div class="cat-title">Visual &amp; Video</div>
       <div class="cat-desc">Create better visuals and creative assets with more structure behind them.</div>
     </div>
 
     <div class="cat-card">
-      <span class="cat-icon">🏗️</span>
+      <div class="cat-icon">
+        <!-- Layers / systems -->
+        <svg viewBox="0 0 24 24"><path d="m12 2 10 6.5v7L12 22 2 15.5v-7L12 2z"/><path d="M12 22v-6.5M22 8.5l-10 7-10-7"/></svg>
+      </div>
       <div class="cat-title">Business &amp; Team Systems</div>
       <div class="cat-desc">Embed AI into how work actually gets done across your team.</div>
     </div>
@@ -329,7 +445,9 @@
     <p class="sub"><span>Built from real work.</span> &nbsp;·&nbsp; <span>Updated weekly.</span> &nbsp;·&nbsp; <span>Free.</span></p>
 
     <div class="ck-wrap">
-      <script async data-uid="8ae0ef2c3f" src="https://tamas-mihaly-ai.kit.com/8ae0ef2c3f/index.js"></script>
+      <div class="kit-override">
+        <script async data-uid="8ae0ef2c3f" src="https://tamas-mihaly-ai.kit.com/8ae0ef2c3f/index.js"></script>
+      </div>
     </div>
   </div>
 

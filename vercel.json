@@ -1,5 +1,10 @@
 {
   "rewrites": [
     { "source": "/resources", "destination": "/resources.html" }
+  ],
+  "redirects": [
+    { "source": "/call", "destination": "https://calendar.app.google/P27zCWPyZ1RMypFTA", "permanent": false },
+    { "source": "/newsletter", "destination": "https://tamas-mihaly-ai.kit.com", "permanent": false },
+    { "source": "/skills", "destination": "https://thrivingcolibri.ai", "permanent": false }
   ]
 }

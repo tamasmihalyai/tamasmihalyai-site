@@ -1,10 +1,11 @@
 {
   "rewrites": [
-    { "source": "/resources", "destination": "/resources.html" }
+    { "source": "/resources", "destination": "/resources.html" },
+    { "source": "/newsletter", "destination": "/newsletter.html" },
+    { "source": "/skills-system-guide", "destination": "/skills-system-guide.html" }
   ],
   "redirects": [
     { "source": "/call", "destination": "https://calendar.app.google/P27zCWPyZ1RMypFTA", "permanent": false },
-    { "source": "/newsletter", "destination": "https://tamas-mihaly-ai.kit.com", "permanent": false },
-    { "source": "/skills", "destination": "https://thrivingcolibri.ai", "permanent": false }
+    { "source": "/the-skill-system", "destination": "https://thrivingcolibri.ai", "permanent": false }
   ]
 }

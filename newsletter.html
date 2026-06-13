@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WPJNM4SW');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From The Field — Tamas Mihaly AI Newsletter</title>
+  <meta name="description" content="Practical AI for marketers wearing five hats. Twice a week, the real workflows I'm using on client work and my own businesses.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+  <style>
+    :root{ --dark:#1a202c; --dark-2:#232b3a; --cyan:#00bcd4; --lav:#a6b6f8; --body:rgba(255,255,255,.68); --muted:rgba(255,255,255,.32); --bdr:rgba(255,255,255,.08); }
+    *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{ font-family:'Inter',sans-serif; background:var(--dark); color:#fff; -webkit-font-smoothing:antialiased; min-height:100vh; }
+    a{ text-decoration:none; color:inherit; }
+    .page{ max-width:600px; margin:0 auto; padding:40px 28px 72px; }
+    .topbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; }
+    .brand{ font-size:13px; font-weight:700; letter-spacing:-.01em; color:#fff; }
+    .brand span{ color:var(--cyan); }
+    .home{ font-size:12px; color:var(--muted); }
+    .home:hover{ color:var(--body); }
+    .eyebrow{ font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan); }
+    h1{ font-size:36px; font-weight:800; letter-spacing:-.03em; line-height:1.05; margin:14px 0 0; }
+    h1 em{ font-family:'Fraunces',serif; font-style:italic; font-weight:400; color:var(--lav); }
+    .sub{ font-size:16px; color:var(--body); line-height:1.65; margin-top:16px; }
+    .card{ background:var(--dark-2); border:1px solid rgba(0,188,212,.18); border-radius:16px; padding:24px; margin:28px 0; }
+    .card-title{ font-size:15px; font-weight:700; color:#fff; margin-bottom:4px; }
+    .card-note{ font-size:13px; color:var(--muted); margin-bottom:16px; }
+    .kit-override .formkit-form,.kit-override [data-style="full"]{ background:transparent!important; padding:0!important; border:none!important; box-shadow:none!important; }
+    .kit-override .formkit-field{ margin-bottom:8px!important; }
+    .kit-override .formkit-input{ background:rgba(255,255,255,.07)!important; border:1px solid rgba(255,255,255,.14)!important; border-radius:8px!important; color:#fff!important; font-family:'Inter',sans-serif!important; font-size:14px!important; padding:12px 15px!important; width:100%!important; box-sizing:border-box!important; outline:none!important; -webkit-text-fill-color:#fff!important; }
+    .kit-override .formkit-input:focus{ border-color:rgba(0,188,212,.5)!important; background:rgba(255,255,255,.09)!important; }
+    .kit-override .formkit-input::placeholder{ color:rgba(255,255,255,.28)!important; -webkit-text-fill-color:rgba(255,255,255,.28)!important; }
+    .kit-override .formkit-submit,.kit-override [data-element="submit"] button{ background:#00bcd4!important; color:#1a202c!important; font-family:'Inter',sans-serif!important; font-size:14px!important; font-weight:700!important; padding:12px 20px!important; border-radius:8px!important; border:none!important; cursor:pointer!important; width:100%!important; margin-top:6px!important; letter-spacing:-.01em!important; transition:opacity .2s!important; }
+    .kit-override .formkit-submit:hover{ opacity:.85!important; }
+    .kit-override .formkit-guarantee{ color:rgba(255,255,255,.28)!important; font-size:11px!important; font-family:'Inter',sans-serif!important; text-align:center!important; margin-top:10px!important; }
+    .kit-override .formkit-powered-by-convertkit-container,.kit-override .formkit-powered-by-convertkit{ display:none!important; }
+    .kit-override .formkit-alert{ background:rgba(0,188,212,.1)!important; border:1px solid rgba(0,188,212,.25)!important; color:#00bcd4!important; border-radius:8px!important; padding:12px 16px!important; font-size:13px!important; font-family:'Inter',sans-serif!important; }
+    .fallback{ display:flex; flex-direction:column; gap:8px; }
+    .fallback input{ background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); border-radius:8px; color:#fff; font-family:'Inter',sans-serif; font-size:14px; padding:12px 15px; width:100%; outline:none; }
+    .fallback input:focus{ border-color:rgba(0,188,212,.5); }
+    .fallback input::placeholder{ color:rgba(255,255,255,.28); }
+    .fallback button{ background:#00bcd4; color:#1a202c; font-family:'Inter',sans-serif; font-size:14px; font-weight:700; padding:12px 20px; border-radius:8px; border:none; cursor:pointer; width:100%; }
+    .fallback button:hover{ opacity:.85; }
+    .trust{ font-size:11px; color:var(--muted); text-align:center; margin-top:12px; }
+    .points-label{ font-size:10px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--lav); margin-bottom:14px; }
+    .point{ display:flex; gap:11px; align-items:flex-start; margin-bottom:12px; font-size:14px; color:var(--body); line-height:1.55; }
+    .point svg{ width:18px; height:18px; flex-shrink:0; margin-top:1px; color:var(--cyan); }
+    .foot{ text-align:center; margin-top:44px; font-size:12px; color:var(--muted); }
+    @media (max-width:480px){ .page{ padding:32px 20px 56px; } h1{ font-size:30px; } }
+  </style>
+</head>
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WPJNM4SW" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <div class="page">
+    <div class="topbar">
+      <a href="/" class="brand">Tamas Mihaly<span> AI</span></a>
+      <a href="/" class="home">← Home</a>
+    </div>
+
+    <div class="eyebrow">The Newsletter</div>
+    <h1>From The Field <em>— twice a week</em></h1>
+    <p class="sub">Practical AI for marketers wearing five hats. The real workflows I'm using on client work and my own businesses — what's working, what isn't, and how to copy it.</p>
+
+    <div class="card">
+      <div class="card-title">Subscribe free</div>
+      <div class="card-note">Two emails a week. Unsubscribe any time.</div>
+      <div class="kit-override" id="kitContainer">
+        <script async data-uid="71994beb42" src="https://tamas-mihaly-ai.kit.com/71994beb42/index.js"></script>
+      </div>
+      <div class="fallback" id="fallback">
+        <input type="email" placeholder="your@email.com">
+        <button onclick="window.open('https://tamas-mihaly-ai.kit.com/','_blank')">Subscribe free →</button>
+        <p class="trust">No spam. Unsubscribe any time.</p>
+      </div>
+    </div>
+
+    <div class="points-label">What you get</div>
+    <div class="point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Two emails a week, in my voice — not a news roundup</div></div>
+    <div class="point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>Real workflows from real client work, ready to steal and use</div></div>
+    <div class="point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>What I'm building, how I built it, and how you can too</div></div>
+    <div class="point"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div>The occasional thing that broke, and the fix</div></div>
+
+    <div class="foot">© 2026 Tamas Mihaly · <a href="/" style="color:var(--cyan)">tamasmihaly.ai</a></div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function(){
+      setTimeout(function(){
+        var f = document.querySelector('#kitContainer .formkit-form');
+        if (f) document.getElementById('fallback').style.display = 'none';
+      }, 2500);
+    });
+  </script>
+</body>
+</html>

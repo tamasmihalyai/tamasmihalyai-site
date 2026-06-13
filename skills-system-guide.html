@@ -49,6 +49,13 @@
     .fallback input::placeholder{ color:rgba(255,255,255,.28); }
     .fallback button{ background:#00bcd4; color:#1a202c; font-family:'Inter',sans-serif; font-size:14px; font-weight:700; padding:12px 20px; border-radius:8px; border:none; cursor:pointer; width:100%; }
     .fallback button:hover{ opacity:.85; }
+    /* Fix browser autofill: keep dark bg + white text */
+    .kit-override .formkit-input:-webkit-autofill,
+    .kit-override .formkit-input:-webkit-autofill:hover,
+    .kit-override .formkit-input:-webkit-autofill:focus,
+    .fallback input:-webkit-autofill,
+    .fallback input:-webkit-autofill:hover,
+    .fallback input:-webkit-autofill:focus{ -webkit-text-fill-color:#fff!important; -webkit-box-shadow:0 0 0 1000px #2d3543 inset!important; box-shadow:0 0 0 1000px #2d3543 inset!important; caret-color:#fff!important; transition:background-color 9999s ease-in-out 0s!important; }
     .trust{ font-size:11px; color:var(--muted); text-align:center; margin-top:12px; }
     /* points */
     .points-label{ font-size:10px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--lav); margin-bottom:14px; }

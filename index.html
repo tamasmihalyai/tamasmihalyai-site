@@ -484,6 +484,14 @@
 
     .nl-fallback-btn:hover { opacity: 0.85; }
 
+    /* Fix browser autofill: keep dark bg + white text */
+    .kit-override .formkit-input:-webkit-autofill,
+    .kit-override .formkit-input:-webkit-autofill:hover,
+    .kit-override .formkit-input:-webkit-autofill:focus,
+    .nl-fallback-input:-webkit-autofill,
+    .nl-fallback-input:-webkit-autofill:hover,
+    .nl-fallback-input:-webkit-autofill:focus { -webkit-text-fill-color:#fff!important; -webkit-box-shadow:0 0 0 1000px #2d3543 inset!important; box-shadow:0 0 0 1000px #2d3543 inset!important; caret-color:#fff!important; transition:background-color 9999s ease-in-out 0s!important; }
+
     .nl-trust {
       font-size: 11px;
       color: var(--muted);

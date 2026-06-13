@@ -73,7 +73,7 @@
       <div class="kit-override" id="kitContainer">
         <script async data-uid="71994beb42" src="https://tamas-mihaly-ai.kit.com/71994beb42/index.js"></script>
       </div>
-      <div class="fallback" id="fallback">
+      <div class="fallback" id="fallback" style="display:none">
         <input type="email" placeholder="your@email.com">
         <button onclick="window.open('https://tamas-mihaly-ai.kit.com/','_blank')">Subscribe free →</button>
         <p class="trust">No spam. Unsubscribe any time.</p>
@@ -90,12 +90,15 @@
   </div>
 
   <script>
-    window.addEventListener('load', function(){
-      setTimeout(function(){
-        var f = document.querySelector('#kitContainer .formkit-form');
-        if (f) document.getElementById('fallback').style.display = 'none';
-      }, 2500);
-    });
+    // Only show the fallback if the Kit form fails to load (no duplicate flash).
+    (function(){
+      var found = function(){ return document.querySelector('#kitContainer .formkit-form'); };
+      var iv = setInterval(function(){ if (found()){ clearInterval(iv); clearTimeout(to); } }, 300);
+      var to = setTimeout(function(){
+        clearInterval(iv);
+        if (!found()) document.getElementById('fallback').style.display = 'flex';
+      }, 6000);
+    })();
   </script>
 </body>
 </html>

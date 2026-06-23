@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Humanize Kit — AI that writes like you</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a202c; --body:#3a4760; --muted:#6b7280;
+    --cyan:#00bcd4; --cyan-ink:#0e7490; --cyan-soft:#e7f7fb; --cyan-line:#b8ebf2;
+    --lav:#a6b6f8; --lav-ink:#5b6ee0; --lav-soft:#eef1fe;
+    --line:#e6e9ef; --soft:#f5f7fb; --bg:#ffffff;
+    --dark:#161b26; --dark-2:#1f2735; --d-body:rgba(255,255,255,.74); --d-muted:rgba(255,255,255,.5); --d-line:rgba(255,255,255,.12);
+    --good:#2bb673; --bad:#9aa3b2;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',system-ui,sans-serif; color:var(--body); background:var(--bg); line-height:1.6; font-size:16px; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,h4{ color:var(--ink); line-height:1.14; letter-spacing:-.02em; }
+  a{ color:var(--cyan-ink); text-decoration:none; }
+  .wrap{ max-width:860px; margin:0 auto; padding:0 22px; }
+  .em{ font-family:'Fraunces',serif; font-style:italic; font-weight:400; }
+  .btn{ display:inline-block; background:var(--cyan); color:#04222a; font-weight:700; font-size:16px; padding:14px 28px; border-radius:11px; box-shadow:0 8px 22px rgba(0,188,212,.30); transition:transform .12s; }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn.big{ font-size:18px; padding:17px 36px; }
+  .sub-cta{ font-size:13.5px; color:var(--muted); margin-top:13px; }
+
+  section{ padding:56px 0; }
+  section.soft{ background:var(--soft); }
+  section.cyan{ background:var(--cyan-soft); }
+  section.lav{ background:var(--lav-soft); }
+  section.dark{ background:var(--dark); }
+  section.dark h2, section.dark h3, section.dark h4{ color:#fff; }
+  section.dark p{ color:var(--d-body); }
+  h2{ font-size:31px; font-weight:800; text-align:center; }
+  h2.left{ text-align:left; }
+  .lead{ font-size:18px; max-width:42em; margin:14px auto 0; text-align:center; }
+  .center{ text-align:center; } .mt{ margin-top:28px; }
+
+  /* HERO (dark) */
+  .hero{ background:radial-gradient(1100px 500px at 50% -10%, rgba(0,188,212,.22), transparent 60%), var(--dark); color:var(--d-body); padding:40px 0 76px; text-align:center; }
+  .hero .logo{ display:flex; align-items:center; gap:10px; margin-bottom:52px; }
+  .hero .logo img{ width:36px; height:36px; border-radius:50%; object-fit:cover; border:1.5px solid var(--cyan); }
+  .hero .logo span{ font-weight:800; color:#fff; font-size:16px; letter-spacing:-.01em; }
+  .hero .kick{ font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--cyan); }
+  .hero h1{ font-size:52px; font-weight:800; color:#fff; margin:16px 0 0; }
+  .hero h1 .em{ color:var(--cyan); }
+  .hero .logo .cy{ color:var(--cyan); }
+  .hero .eyebrow{ font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--lav); margin-bottom:14px; }
+  .hero .sub{ font-size:19px; color:var(--d-body); max-width:30em; margin:20px auto 0; }
+  .hero .built{ font-size:14px; color:var(--d-muted); margin-top:14px; }
+  .hero .cta{ margin-top:30px; }
+
+  /* before/after */
+  .ba{ display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:780px; margin:28px auto 0; }
+  .ba .box{ border-radius:14px; padding:18px 20px; background:#fff; }
+  .ba .bad{ border:1px solid var(--line); border-top:3px solid var(--bad); }
+  .ba .good{ border:1px solid var(--cyan-line); border-top:3px solid var(--cyan); }
+  .ba .tag{ font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .ba .bad .tag{ color:var(--muted); } .ba .good .tag{ color:var(--cyan-ink); }
+  .ba .q{ font-style:italic; color:var(--ink); font-size:15px; }
+  .ba .score{ font-weight:800; font-size:20px; }
+  .ba .bad .score{ color:var(--bad); } .ba .good .score{ color:var(--good); }
+  @media(max-width:680px){ .ba{ grid-template-columns:1fr; } }
+
+  /* feature list + steps */
+  .feat{ max-width:640px; margin:24px auto 0; }
+  .feat li{ list-style:none; padding:14px 0; border-top:1px solid var(--line); display:flex; gap:13px; }
+  .feat li .d{ width:9px; height:9px; border-radius:50%; background:var(--cyan); flex:none; margin-top:8px; }
+  .feat li b{ color:var(--ink); }
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:780px; margin:30px auto 0; }
+  .steps .s{ background:var(--dark-2); border:1px solid var(--d-line); border-radius:14px; padding:22px; }
+  .steps .n{ width:32px; height:32px; border-radius:50%; background:rgba(0,188,212,.16); color:var(--cyan); font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:12px; }
+  .steps h4{ font-size:16px; margin-bottom:5px; color:#fff; }
+  .steps p{ color:var(--d-body); font-size:15px; }
+  @media(max-width:680px){ .steps{ grid-template-columns:1fr; } }
+
+  /* comparison */
+  .cmp{ max-width:780px; margin:30px auto 0; border-radius:16px; overflow:hidden; border:1px solid var(--line); box-shadow:0 10px 30px rgba(26,32,44,.06); }
+  .cmp .row{ display:grid; grid-template-columns:1fr 1fr; }
+  .cmp .row > div{ padding:16px 18px; font-size:15px; border-top:1px solid var(--line); }
+  .cmp .head > div{ font-weight:800; border-top:none; }
+  .cmp .l{ background:#fff; color:var(--muted); }
+  .cmp .r{ background:var(--cyan-soft); color:var(--ink); border-left:1px solid var(--cyan-line); }
+  .cmp .r b{ color:var(--cyan-ink); } .cmp .head .r{ color:var(--cyan-ink); } .cmp .head .l{ color:var(--ink); }
+
+  /* cards */
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:820px; margin:30px auto 0; }
+  .card{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px; }
+  .card h4{ font-size:17px; margin-bottom:6px; }
+  .card .flip{ font-size:14px; color:var(--body); margin-top:8px; }
+  .card .flip .s1{ color:var(--bad); font-weight:700; } .card .flip .s2{ color:var(--good); font-weight:700; }
+  @media(max-width:680px){ .cards{ grid-template-columns:1fr; } }
+
+  /* about */
+  .about{ display:flex; gap:22px; align-items:center; max-width:700px; margin:24px auto 0; }
+  .about img{ width:96px; height:96px; border-radius:50%; object-fit:cover; border:3px solid var(--cyan-line); flex:none; }
+  .about p{ font-size:16px; }
+
+  /* pricing */
+  .pcard{ background:var(--dark-2); border:1px solid var(--d-line); border-radius:22px; padding:36px; max-width:520px; margin:30px auto 0; text-align:center; box-shadow:0 18px 50px rgba(0,0,0,.35); }
+  .pcard .name{ font-size:18px; font-weight:700; color:#fff; }
+  .pcard .amt{ font-size:56px; font-weight:800; color:#fff; letter-spacing:-.03em; margin:6px 0; }
+  .pcard .amt span{ font-size:18px; color:var(--d-muted); font-weight:600; }
+  .pcard .incl{ text-align:left; max-width:330px; margin:20px auto; }
+  .pcard .incl li{ list-style:none; color:var(--d-body); font-size:15px; padding:5px 0 5px 26px; position:relative; }
+  .pcard .incl li::before{ content:"✓"; position:absolute; left:0; color:var(--cyan); font-weight:800; }
+  .pcard .guar{ font-size:14px; color:var(--d-muted); margin-top:8px; }
+  .honest{ max-width:560px; margin:26px auto 0; text-align:center; font-size:14.5px; color:var(--d-muted); font-style:italic; }
+
+  /* faq */
+  .faq{ max-width:700px; margin:28px auto 0; }
+  .faq .q{ border-top:1px solid var(--line); padding:18px 0; }
+  .faq .q h4{ font-size:17px; margin-bottom:6px; }
+  .faq .q p{ font-size:15px; }
+
+  /* footer (dark) */
+  footer{ background:var(--dark); color:var(--d-body); padding:48px 0 30px; }
+  footer .who{ max-width:700px; margin:0 auto; font-size:15px; }
+  footer .who b{ color:#fff; }
+  footer a{ color:var(--cyan); }
+  footer .links{ margin-top:12px; color:var(--d-muted); font-size:14px; }
+  footer .legal{ max-width:700px; margin:26px auto 0; padding-top:18px; border-top:1px solid var(--d-line); display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; font-size:13px; color:var(--d-muted); }
+  footer .legal a{ color:var(--d-muted); }
+  footer .copyr{ max-width:700px; margin:14px auto 0; font-size:13px; color:var(--d-muted); }
+  .ph{ color:var(--lav); border-bottom:1px dashed var(--lav); }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero"><div class="wrap">
+    <div class="logo"><img src="/tamas-mihaly-profile.png" alt="Tamas Mihaly" onerror="this.style.display='none'"><span>TAMAS MIHALY <span class="cy">AI</span></span></div>
+    <div class="eyebrow">The Humanize Kit</div>
+    <h1>AI that writes like you.<br><span class="em">Actually you.</span></h1>
+    <p class="sub">The Humanize Kit takes the AI out of your draft, rewrites it in your own voice, and gives you a score to prove it worked.</p>
+    <div class="built">Built and tested on my businesses and real client work.</div>
+    <div class="cta"><a class="btn big" href="#pricing">Get the kit</a></div>
+  </div></header>
+
+  <!-- PROBLEM -->
+  <section><div class="wrap">
+    <h2>You can tell when it's AI. <span class="em" style="color:var(--cyan-ink)">So can your readers.</span></h2>
+    <p class="lead">The same few words, the rhythm a bit too even, that feeling that no real person wrote it. And a list of words to avoid doesn't fix it. You take out the obvious ones and it still reads flat. The fix is two parts: take the AI out, and put you back in. That's what this does.</p>
+  </div></section>
+
+  <!-- PROOF -->
+  <section class="cyan"><div class="wrap">
+    <h2>Here's a real one</h2>
+    <p class="lead">A paragraph of marketing waffle, run through the kit. The score is from the kit's own checker.</p>
+    <div class="ba">
+      <div class="box bad"><span class="tag">Before <span class="score">47.0</span></span><span class="q">"In today's fast-paced digital landscape, our cutting-edge platform empowers businesses to unlock their full potential. We're passionate about delivering world-class, innovative solutions…"</span></div>
+      <div class="box good"><span class="tag">After <span class="score">0.0</span></span><span class="q">"We make software that helps your team work faster. It uses AI to handle the repetitive parts of your workflow, so you spend less time on busywork."</span></div>
+    </div>
+    <p class="center mt">Same meaning. One sounds like a person. You see the number move every time.</p>
+  </div></section>
+
+  <!-- WHAT YOU GET -->
+  <section><div class="wrap">
+    <h2>What you get</h2>
+    <p class="lead">Two skills that work together, plus everything you need to run them. You own the files and you get every update for life. No subscription.</p>
+    <ul class="feat">
+      <li><span class="d"></span><span><b>The Humanize skill.</b> Finds the AI patterns, rewrites them, and scores the draft before and after.</span></li>
+      <li><span class="d"></span><span><b>The voice-fingerprint skill.</b> Captures how you actually write into a reusable file, so the rewrite sounds like you and not a stranger.</span></li>
+      <li><span class="d"></span><span><b>Worked examples.</b> Real before-and-afters, with the scores.</span></li>
+      <li><span class="d"></span><span><b>A manual</b> (PDF) and a <b>short setup video.</b> Set it up in a few minutes, in Claude Code, Codex, the Claude app, or ChatGPT.</span></li>
+    </ul>
+    <div class="center mt"><a class="btn" href="#pricing">Get the kit</a></div>
+  </div></section>
+
+  <!-- HOW IT WORKS (dark) -->
+  <section class="dark"><div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="s"><div class="n">1</div><h4>Capture your voice, once</h4><p>Feed it a few things you actually wrote, and it builds your voice file.</p></div>
+      <div class="s"><div class="n">2</div><h4>Paste any draft</h4><p>It takes out the AI and rewrites it in your voice.</p></div>
+      <div class="s"><div class="n">3</div><h4>Check the score</h4><p>A number before and after, so you can see it worked.</p></div>
+    </div>
+  </div></section>
+
+  <!-- COMPARISON -->
+  <section><div class="wrap">
+    <h2>"But I can just prompt ChatGPT for this"</h2>
+    <p class="lead">You can, and you'll get partway, for one chat. Here's the difference.</p>
+    <div class="cmp">
+      <div class="row head"><div class="l">Prompting "capture my tone"</div><div class="r">The Humanize Kit</div></div>
+      <div class="row"><div class="l">Lives in one chat, then it's gone</div><div class="r"><b>A saved file</b> you reuse everywhere, forever</div></div>
+      <div class="row"><div class="l">Captures from whatever you paste, often writing AI already touched</div><div class="r">Built only on your <b>real, AI-free writing</b></div></div>
+      <div class="row"><div class="l">One shot, you get what you get</div><div class="r">A <b>testing loop</b> until it sounds like you</div></div>
+      <div class="row"><div class="l">"Sound friendly"</div><div class="r">Anchored on <b>your real sentences</b></div></div>
+      <div class="row"><div class="l">No way to know if it worked</div><div class="r">A <b>score</b>, before and after</div></div>
+    </div>
+    <div class="center mt"><a class="btn" href="#pricing">Get the kit</a></div>
+  </div></section>
+
+  <!-- SCENARIOS -->
+  <section class="soft"><div class="wrap">
+    <h2>Where people use it</h2>
+    <div class="cards">
+      <div class="card"><h4>Your newsletter</h4><p>Run the draft through it as the last step before you send.</p><p class="flip"><span class="s1">22.0</span> → <span class="s2">0.0</span>: from "three game-changing tools that will empower you" to "three AI tools I've been testing on real client work."</p></div>
+      <div class="card"><h4>A LinkedIn post</h4><p>Catch the AI before you post, so it doesn't read like the rest of the feed.</p><p class="flip"><span class="s1">20.0</span> → <span class="s2">0.0</span>: from "I'm thrilled to announce… an incredible journey!" to "Last week I ran a workshop for a team of 12 marketers."</p></div>
+      <div class="card"><h4>Landing pages and web copy</h4><p>This is where sounding like AI quietly costs you trust. The extra pass is worth it.</p></div>
+      <div class="card"><h4>Client work</h4><p>Run their drafts through their own captured voice, in their words. One file per client.</p></div>
+    </div>
+  </div></section>
+
+  <!-- ABOUT -->
+  <section><div class="wrap">
+    <h2 class="left">Why I built it</h2>
+    <div class="about">
+      <img src="/tamas-mihaly-profile.png" alt="Tamas Mihaly" onerror="this.style.display='none'">
+      <p>I'm Tamas. I've been doing marketing for over ten years, and I use AI to write every day. For about three and a half years I tried everything to make it sound like me. Prompts, projects, all kinds of setups. They got good, but it was never quite me. This is the first thing that's properly good, so I packaged it up. I run my own and my clients' marketing on it.</p>
+    </div>
+  </div></section>
+
+  <!-- PRICING (dark) -->
+  <section class="dark" id="pricing"><div class="wrap">
+    <h2>Get the Humanize Kit</h2>
+    <div class="pcard">
+      <div class="name">The Humanize Kit</div>
+      <div class="amt">£29 <span>one time</span></div>
+      <ul class="incl">
+        <li>The Humanize skill</li>
+        <li>The voice-fingerprint skill</li>
+        <li>Worked examples</li>
+        <li>The manual (PDF) + setup video</li>
+        <li>Lifetime updates</li>
+      </ul>
+      <a class="btn big" href="https://buy.stripe.com/3cI7sM29v2BM85PbpKejK00">Get the kit</a>
+      <div class="guar">14-day money-back guarantee. Email me within 14 days, no questions asked.</div>
+    </div>
+    <p class="honest">One honest thing: this isn't a button that turns weak writing into great writing on its own. It gets you to a clean draft that sounds like you, very fast. The judgement and the final read are still yours. That's the point of it. Keep the human in the loop.</p>
+  </div></section>
+
+  <!-- FAQ -->
+  <section><div class="wrap">
+    <h2>Questions</h2>
+    <div class="faq">
+      <div class="q"><h4>Can't I just prompt ChatGPT to capture my tone?</h4><p>You can, and it gets you partway for one chat. The kit is the difference between that and a voice that holds up everywhere, every time. It's a saved file you keep and reuse. A prompt lives in one chat, then it's gone. It only learns from your real, AI-free writing (most people feed it AI-tidied text and capture the machine instead). It's built through a testing loop until it actually sounds like you. And it gives you a score, so you know it worked.</p></div>
+      <div class="q"><h4>Do I need to know how to code?</h4><p>No. If you can paste text into Claude or ChatGPT, you can run this. The manual and the video walk you through setup, and you can ask Claude to install it for you in plain English.</p></div>
+      <div class="q"><h4>Is it a subscription?</h4><p>No. It's £29, once. You own the files.</p></div>
+      <div class="q"><h4>Does it work in ChatGPT, or only Claude?</h4><p>It's built and tested for Claude Code, where it runs best. It also works in Codex and the Claude app, which both support skills, and in ChatGPT on Team and Enterprise, where ChatGPT supports skills. On a personal or Plus ChatGPT account, skills aren't available yet, so use Claude or Codex for now. There's a short setup file for each.</p></div>
+      <div class="q"><h4>Do I need a paid AI plan?</h4><p>The rewrite works on any plan. The score runs a small script, so it needs a tool that can run code, which is a paid Claude or ChatGPT feature. For the full experience, including the score, use a paid plan.</p></div>
+      <div class="q"><h4>What if I don't have writing samples?</h4><p>It still takes the AI out and gets you to clean, plain English. For the "sounds like you" part, you give it a few real samples, even voice notes work. Two minutes and you've got your voice file.</p></div>
+      <div class="q"><h4>What exactly do I get?</h4><p>The two skill folders, the worked examples, the manual as a PDF, and the setup video. Everything in one download.</p></div>
+    </div>
+  </div></section>
+
+  <!-- FINAL (dark) -->
+  <section class="dark center"><div class="wrap">
+    <h2>Make everything you write sound like you</h2>
+    <p class="lead">Capture your voice once, and every draft from now on goes out sounding like a real person.</p>
+    <div class="mt"><a class="btn big" href="#pricing">Get the kit</a></div>
+    <p class="sub-cta" style="color:var(--d-muted)">Not ready? <a href="https://tamasmihaly.ai/skills-system-guide?utm_source=humanize-kit-landing&utm_medium=web&utm_campaign=humanize-kit" style="color:var(--cyan)">Grab the free guide first.</a></p>
+  </div></section>
+
+  <!-- FOOTER (dark) -->
+  <footer><div class="wrap who">
+    I'm Tamas. I run <a href="https://thrivingcolibri.ai/?utm_source=humanize-kit-landing&utm_medium=web&utm_campaign=humanize-kit">Thriving Colibri</a>, an AI-native marketing agency. I've been doing marketing for over ten years, freelance, in-house and agency, and these days I build AI into how the work gets done. I run marketing for businesses, and I train teams to do it themselves.
+    <div class="links">Want me to run your marketing, or train your team? <a href="https://tamasmihaly.ai/call?utm_source=humanize-kit-landing&utm_medium=web&utm_campaign=humanize-kit">Book a call</a>. Want a real workflow every week? <a href="https://tamasmihaly.ai/newsletter?utm_source=humanize-kit-landing&utm_medium=web&utm_campaign=humanize-kit">Join the newsletter</a>.</div>
+    <div class="legal">
+      <span><a href="https://linkedin.com/in/tamasmihaly">LinkedIn</a> · <a href="https://tiktok.com/@thrivingcolibri">TikTok</a></span>
+      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
+    </div>
+    <div class="copyr">© 2026 Tamas Mihaly AI</div>
+  </div></footer>
+
+<!-- Vercel Web Analytics: cookieless, no banner needed -->
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script>
+  // Carry the visit source through to Stripe so each sale is attributable.
+  // Sets client_reference_id = the utm_source the visitor arrived with (or 'humanize-kit-landing' if direct).
+  // Also fires a cookieless "get_the_kit_click" event when someone clicks through to checkout.
+  (function(){
+    var src = new URLSearchParams(window.location.search).get('utm_source') || 'humanize-kit-landing';
+    document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(function(a){
+      try { var u = new URL(a.href); u.searchParams.set('client_reference_id', src); a.href = u.toString(); } catch(e){}
+      a.addEventListener('click', function(){ if(window.va) window.va('event', { name: 'get_the_kit_click' }); });
+    });
+  })();
+</script>
+
+</body>
+</html>

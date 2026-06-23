@@ -2,7 +2,11 @@
   "rewrites": [
     { "source": "/resources", "destination": "/resources.html" },
     { "source": "/newsletter", "destination": "/newsletter.html" },
-    { "source": "/skills-system-guide", "destination": "/skills-system-guide.html" }
+    { "source": "/skills-system-guide", "destination": "/skills-system-guide.html" },
+    { "source": "/humanize-kit", "destination": "/humanize-kit.html" },
+    { "source": "/humanize-kit-thank-you", "destination": "/humanize-kit-thank-you.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" }
   ],
   "redirects": [
     { "source": "/call", "destination": "https://calendar.app.google/P27zCWPyZ1RMypFTA", "permanent": false },

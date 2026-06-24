@@ -36,8 +36,10 @@ module.exports = async (req, res) => {
     const STRIPE_KEY = process.env.STRIPE_SECRET_KEY;
     const RESEND_KEY = process.env.RESEND_API_KEY;
     const DOWNLOAD_URL = process.env.DOWNLOAD_URL;
-    const FROM = process.env.DELIVERY_FROM || 'Tamas Mihaly <onboarding@resend.dev>';
-    const REPLY_TO = process.env.DELIVERY_REPLY_TO; // optional: where buyer replies land
+    // Sender set in code (controlled here, not via a Vercel env var).
+    // hello@thrivingcolibri.ai is the Resend-verified domain; replies land in that inbox natively.
+    const FROM = 'Tamas Mihaly 🧭 <hello@thrivingcolibri.ai>';
+    const REPLY_TO = process.env.DELIVERY_REPLY_TO; // optional override
 
     if (!STRIPE_KEY || !RESEND_KEY || !DOWNLOAD_URL) {
       console.error('Missing env vars', {

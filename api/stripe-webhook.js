@@ -116,8 +116,12 @@ function readRaw(req) {
 }
 
 function deliveryEmail(downloadUrl) {
-  return `<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#f5f7fb;">Your download's inside, plus a 2-minute setup so it writes like you.</div>
-<div style="display:none;max-height:0;overflow:hidden;">&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;</div>
+  // Hidden preheader = the inbox/notification preview text. The padding AFTER the sentence
+  // fills the snippet on long-preview clients (iOS Mail + push notifications) so the visible
+  // body (e.g. the "TAMAS MIHALY AI" header) can't leak into the preview. Zero-width spaces
+  // alone don't count; &zwnj;&nbsp; pairs do. (See the email-preheader rule in global CLAUDE.md.)
+  const preheaderPad = '&zwnj;&nbsp;'.repeat(120);
+  return `<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#f5f7fb;">Your download's inside, plus a quick 2-minute setup so everything you write sounds like you.${preheaderPad}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f5f7fb;margin:0;padding:0;width:100%;">
   <tr>
     <td align="center" style="padding:24px 12px;">

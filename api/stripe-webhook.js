@@ -87,6 +87,7 @@ module.exports = async (req, res) => {
         ...(REPLY_TO ? { reply_to: REPLY_TO } : {}),
         subject: 'Your Humanize Kit is here',
         html: deliveryEmail(DOWNLOAD_URL),
+        text: deliveryEmailText(DOWNLOAD_URL),
       }),
     });
 
@@ -115,20 +116,69 @@ function readRaw(req) {
 }
 
 function deliveryEmail(downloadUrl) {
-  return `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a202c;max-width:560px;margin:0 auto;padding:8px 4px;line-height:1.6;">
-  <p style="font-size:16px;margin:0 0 16px;">Hey,</p>
-  <p style="font-size:16px;margin:0 0 16px;">Thanks for getting the Humanize Kit. Here it is.</p>
-  <p style="margin:24px 0;">
-    <a href="${downloadUrl}" style="background:#00bcd4;color:#04222a;font-weight:700;text-decoration:none;padding:14px 26px;border-radius:10px;display:inline-block;font-size:16px;">Download the Humanize Kit</a>
-  </p>
-  <p style="font-size:16px;margin:0 0 16px;">Open the manual first. It's in the download, and it walks you through setting it up in Claude Code, Codex, the Claude app or ChatGPT, then capturing your voice. The short video does the same if you'd rather watch.</p>
-  <p style="font-size:16px;margin:0 0 6px;">Two things worth knowing:</p>
-  <ul style="font-size:16px;padding-left:20px;margin:0 0 16px;">
-    <li style="margin-bottom:8px;">Capture your voice first. Give it a few things you actually wrote. That's what makes the rewrite sound like you.</li>
-    <li style="margin-bottom:8px;">The rewrite works on any plan. The score runs a small script, so that part needs a paid Claude or ChatGPT.</li>
-  </ul>
-  <p style="font-size:16px;margin:0 0 16px;">You get every update for life, so when I improve the kit you get the new version.</p>
-  <p style="font-size:16px;margin:0 0 16px;">If anything's not working, just reply to this email. It comes straight to me.</p>
-  <p style="font-size:16px;margin:24px 0 0;">Tamas</p>
-</div>`;
+  return `<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#f5f7fb;">Your download's inside, plus a 2-minute setup so it writes like you.</div>
+<div style="display:none;max-height:0;overflow:hidden;">&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f5f7fb;margin:0;padding:0;width:100%;">
+  <tr>
+    <td align="center" style="padding:24px 12px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#ffffff;border:1px solid #e6e9ef;border-radius:14px;">
+        <tr>
+          <td style="background-color:#161b26;border-radius:14px 14px 0 0;padding:18px 28px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="padding-right:10px;">
+                  <img src="https://tamasmihaly.ai/tamas-mihaly-profile.png" width="36" height="36" alt="Tamas Mihaly" style="display:block;width:36px;height:36px;border-radius:50%;border:1px solid #00bcd4;">
+                </td>
+                <td style="font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:bold;color:#ffffff;letter-spacing:0.5px;">TAMAS MIHALY <span style="color:#00bcd4;">AI</span></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:32px 28px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;color:#1a202c;">
+            <p style="margin:0 0 16px;">Hey,</p>
+            <p style="margin:0 0 24px;">Thanks for getting the Humanize Kit. Here it is.</p>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;">
+              <tr>
+                <td align="center" bgcolor="#00bcd4" style="border-radius:10px;">
+                  <a href="${downloadUrl}" target="_blank" style="display:inline-block;padding:14px 32px;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:bold;color:#04222a;text-decoration:none;">Download the Humanize Kit</a>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:0 0 20px;">Open the manual first. It's in the download, and it walks you through setting it up in Claude Code, Codex, the Claude app or ChatGPT, then capturing your voice. The short video does the same if you'd rather watch.</p>
+            <p style="margin:0 0 12px;font-weight:bold;">Two things worth knowing</p>
+            <p style="margin:0 0 12px;"><span style="color:#00bcd4;font-weight:bold;">&bull;</span>&nbsp; Capture your voice first. Give it a few things you actually wrote. That's what makes the rewrite sound like you.</p>
+            <p style="margin:0 0 24px;"><span style="color:#00bcd4;font-weight:bold;">&bull;</span>&nbsp; The rewrite works on any plan. The score runs a small script, so that part needs a paid Claude or ChatGPT.</p>
+            <p style="margin:0 0 20px;">You get every update for life, so when I improve the kit you get the new version.</p>
+            <p style="margin:0 0 24px;">If anything's not working, just reply to this email. It comes straight to me.</p>
+            <p style="margin:0;">Tamas</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:18px 28px;border-top:1px solid #eef1f6;font-family:Helvetica,Arial,sans-serif;font-size:12px;line-height:1.5;color:#9aa3b2;">Thriving Colibri Ltd &middot; You're receiving this because you bought the Humanize Kit.</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>`;
+}
+
+function deliveryEmailText(downloadUrl) {
+  return `Hey,
+
+Thanks for getting the Humanize Kit. Here it is.
+
+Download the Humanize Kit: ${downloadUrl}
+
+Open the manual first. It's in the download, and it walks you through setting it up in Claude Code, Codex, the Claude app or ChatGPT, then capturing your voice. The short video does the same if you'd rather watch.
+
+Two things worth knowing
+- Capture your voice first. Give it a few things you actually wrote. That's what makes the rewrite sound like you.
+- The rewrite works on any plan. The score runs a small script, so that part needs a paid Claude or ChatGPT.
+
+You get every update for life, so when I improve the kit you get the new version.
+
+If anything's not working, just reply to this email. It comes straight to me.
+
+Tamas`;
 }

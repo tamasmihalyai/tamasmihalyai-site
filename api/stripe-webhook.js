@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
 
     const STRIPE_KEY = process.env.STRIPE_SECRET_KEY;
     const RESEND_KEY = process.env.RESEND_API_KEY;
-    const DOWNLOAD_URL = 'https://tamasmihaly.ai/downloads/the-humanize-kit.zip'; // pinned in code (hosted on the site); no Vercel env var needed
+    const DOWNLOAD_URL = 'https://drive.google.com/uc?export=download&id=1r6aNpyc1iBZtmAglXorkV8c5JjqLunoT'; // Google Drive direct-download (trusted domain) while tamasmihaly.ai builds Safe Browsing reputation; site-hosted copy stays at /downloads/the-humanize-kit.zip as a fallback
     // Sender set in code (controlled here, not via a Vercel env var).
     // hello@thrivingcolibri.ai is the Resend-verified domain; replies land in that inbox natively.
     const FROM = 'Tamas Mihaly 🧭 <hello@thrivingcolibri.ai>';

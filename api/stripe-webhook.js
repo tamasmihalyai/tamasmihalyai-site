@@ -149,7 +149,7 @@ function deliveryEmail(downloadUrl) {
                 </td>
               </tr>
             </table>
-            <p style="margin:0 0 20px;">Open the manual first. It's in the download, and it walks you through setting it up in Claude Code, Codex, the Claude app or ChatGPT, then capturing your voice. The short video does the same if you'd rather watch.</p>
+            <p style="margin:0 0 20px;">Open the guide first. It's in the download, and it walks you through setting it up in Claude Code, Codex, the Claude app or ChatGPT, then capturing your voice.</p>
             <p style="margin:0 0 12px;font-weight:bold;">Two things worth knowing</p>
             <p style="margin:0 0 12px;"><span style="color:#00bcd4;font-weight:bold;">&bull;</span>&nbsp; Capture your voice first. Give it a few things you actually wrote. That's what makes the rewrite sound like you.</p>
             <p style="margin:0 0 24px;"><span style="color:#00bcd4;font-weight:bold;">&bull;</span>&nbsp; The rewrite works on any plan. The score runs a small script, so that part needs a paid Claude or ChatGPT.</p>
@@ -174,7 +174,7 @@ Thanks for getting the Humanize Kit. Here it is.
 
 Download the Humanize Kit: ${downloadUrl}
 
-Open the manual first. It's in the download, and it walks you through setting it up in Claude Code, Codex, the Claude app or ChatGPT, then capturing your voice. The short video does the same if you'd rather watch.
+Open the guide first. It's in the download, and it walks you through setting it up in Claude Code, Codex, the Claude app or ChatGPT, then capturing your voice.
 
 Two things worth knowing
 - Capture your voice first. Give it a few things you actually wrote. That's what makes the rewrite sound like you.

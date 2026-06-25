@@ -116,6 +116,7 @@ function readRaw(req) {
 
 function deliveryEmail(downloadUrl) {
   return `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a202c;max-width:560px;margin:0 auto;padding:8px 4px;line-height:1.6;">
+  <p style="font-size:16px;margin:0 0 16px;">Hey,</p>
   <p style="font-size:16px;margin:0 0 16px;">Thanks for getting the Humanize Kit. Here it is.</p>
   <p style="margin:24px 0;">
     <a href="${downloadUrl}" style="background:#00bcd4;color:#04222a;font-weight:700;text-decoration:none;padding:14px 26px;border-radius:10px;display:inline-block;font-size:16px;">Download the Humanize Kit</a>

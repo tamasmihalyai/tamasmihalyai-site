@@ -285,6 +285,43 @@
 
     .feat:hover .feat-btn { opacity: 0.88; }
 
+    /* ── PERCH (own product) ── */
+    .perch {
+      display: block;
+      background: linear-gradient(180deg, rgba(166,182,248,0.07), var(--dark-2) 62%);
+      border-radius: 16px;
+      padding: 26px 24px;
+      border: 1px solid rgba(166,182,248,0.22);
+      transition: border-color 0.2s, transform 0.18s;
+    }
+
+    .perch:hover {
+      border-color: rgba(166,182,248,0.45);
+      transform: translateY(-2px);
+    }
+
+    .badge-lav {
+      color: var(--lav);
+      background: rgba(166,182,248,0.1);
+      border: 1px solid rgba(166,182,248,0.22);
+    }
+
+    .perch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--lav);
+      color: var(--dark);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 7px;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s;
+    }
+
+    .perch:hover .perch-btn { opacity: 0.88; }
+
     /* ── MOST WANTED ── */
     .wanted-card {
       display: block;
@@ -688,6 +725,20 @@
       <div class="feat-title">Tamas's Free AI Resource Library</div>
       <div class="feat-desc">A practical library of 40+ AI resources to help you use AI across real business and marketing work. Guides, prompts, SOPs, playbooks, workflows, checklists, workbooks, Notion templates, and AI assistants covering content, SEO, PPC, research, reporting, strategy, visual production, and team adoption.</div>
       <div class="feat-btn">Get Free Access →</div>
+    </a>
+  </div>
+
+  <!-- PERCH -->
+  <div class="block">
+    <p class="label">Now Building</p>
+    <a href="https://perch.marketing" target="_blank" class="perch">
+      <div class="badge-row">
+        <span class="badge badge-lav">Waitlist Open</span>
+        <span class="badge badge-grey">Marketing Software</span>
+      </div>
+      <div class="feat-title">Perch — Marketing Reporting, Run From Claude</div>
+      <div class="feat-desc">The reporting cockpit I built to run AI-native marketing for my own clients. Connect Google Ads, GA4, Search Console and Meta, build white-label client dashboards, and pull live answers straight from Claude. Join the waitlist for early access.</div>
+      <div class="perch-btn">Join the Waitlist →</div>
     </a>
   </div>
 

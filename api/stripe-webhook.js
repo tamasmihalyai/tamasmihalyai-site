@@ -126,9 +126,19 @@ module.exports = async (req, res) => {
       }),
     });
 
-    if (!sendResp.ok) {
+    const buyerOk = sendResp.ok;
+    if (!buyerOk) {
       const detail = await sendResp.text();
       console.error('Resend failed', sendResp.status, detail);
+    }
+
+    // Notify the seller of the sale (best-effort — never blocks delivery; fires even if the
+    // buyer email failed, so a problem sale still reaches you).
+    await notifySale({ RESEND_KEY, FROM, product, email, session, buyerOk }).catch((e) =>
+      console.error('Sale notify failed', e)
+    );
+
+    if (!buyerOk) {
       res.status(500).send('Email send failed');
       return;
     }
@@ -150,6 +160,51 @@ function readRaw(req) {
     req.on('end', () => resolve(data || '{}'));
     req.on('error', reject);
   });
+}
+
+// Seller sale alert -> hello@thrivingcolibri.ai. Set in code (controlled here, like FROM).
+async function notifySale({ RESEND_KEY, FROM, product, email, session, buyerOk }) {
+  const NOTIFY_TO = 'hello@thrivingcolibri.ai';
+  const { subject, html, text } = saleNotify(product, email, session, buyerOk);
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: FROM, to: [NOTIFY_TO], subject, html, text }),
+  });
+  if (!resp.ok) console.error('Sale notify send failed', resp.status, await resp.text());
+}
+
+function saleNotify(product, email, session, buyerOk) {
+  const amountStr = formatAmount(session.amount_total, session.currency);
+  const when = new Date().toUTCString();
+  const deliveredNote = buyerOk ? 'sent to the buyer ✓' : 'FAILED to send — check the logs';
+  const subject = `💰 New sale: ${product.label} — ${amountStr}`;
+  const row = (k, v) =>
+    `<tr><td style="padding:3px 18px 3px 0;color:#6b7280;">${k}</td><td style="padding:3px 0;color:#1a202c;font-weight:bold;">${v}</td></tr>`;
+  const html = `<div style="font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#1a202c;">
+  <p style="font-size:20px;font-weight:bold;margin:0 0 2px;">💰 New sale</p>
+  <p style="margin:0 0 16px;color:#16a34a;font-weight:bold;font-size:16px;">${product.label} — ${amountStr}</p>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+    ${row('Buyer', email)}
+    ${row('Amount', amountStr)}
+    ${row('Product', product.label)}
+    ${row('When', when)}
+    ${row('Delivery', deliveredNote)}
+  </table></div>`;
+  const text = `New sale: ${product.label} - ${amountStr}
+
+Buyer:   ${email}
+Amount:  ${amountStr}
+Product: ${product.label}
+When:    ${when}
+Delivery email: ${deliveredNote}`;
+  return { subject, html, text };
+}
+
+function formatAmount(amt, cur) {
+  const v = ((amt || 0) / 100).toFixed(2);
+  const sym = { gbp: '£', usd: '$', eur: '€' }[(cur || 'gbp').toLowerCase()] || '';
+  return sym ? `${sym}${v}` : `${v} ${(cur || '').toUpperCase()}`;
 }
 
 function humanizeKitEmail(downloadUrl) {

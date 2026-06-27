@@ -11,7 +11,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tamas Mihaly AI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+  <meta name="description" content="Tamas Mihaly, AI trainer, consultant and AI-native full-stack marketer. My newsletter, the Humanize Kit and the Skill System, a free AI resource library, and how to work with me.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
   <style>
 
     :root {
@@ -34,6 +35,7 @@
       color: #fff;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -42,6 +44,25 @@
       max-width: 560px;
       margin: 0 auto;
       padding: 72px 28px 80px;
+      position: relative;
+    }
+
+    /* keep all real content above the hero spotlight glow */
+    .page > * { position: relative; z-index: 1; }
+
+    /* ── HERO SPOTLIGHT ── */
+    .spotlight {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(520px, 92vw);
+      height: 340px;
+      background: radial-gradient(ellipse 60% 60% at 50% 28%,
+                  rgba(0,188,212,0.20), rgba(166,182,248,0.10) 45%, transparent 72%);
+      filter: blur(14px);
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* ── PROFILE ── */
@@ -50,25 +71,20 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 6px;
     }
 
     .avatar {
-      width: 100px;
-      height: 100px;
+      width: 104px;
+      height: 104px;
       border-radius: 50%;
-      background: var(--dark-2);
-      border: 1.5px solid rgba(0,188,212,0.3);
+      background: linear-gradient(140deg, var(--cyan), var(--lav));
+      padding: 2.5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
-      font-weight: 800;
-      color: var(--cyan);
-      letter-spacing: -0.03em;
       margin-bottom: 20px;
       position: relative;
-      overflow: hidden;
     }
 
     .avatar img {
@@ -76,12 +92,14 @@
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
+      border: 3px solid var(--dark);
+      display: block;
     }
 
     .avatar::after {
       content: '';
       position: absolute;
-      inset: -4px;
+      inset: -5px;
       border-radius: 50%;
       border: 1px solid rgba(0,188,212,0.12);
       pointer-events: none;
@@ -100,15 +118,29 @@
       font-size: 13px;
       color: var(--cyan);
       font-weight: 500;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .profile-role {
       font-size: 13px;
       color: var(--muted);
       letter-spacing: 0.01em;
-      margin-bottom: 20px;
+      margin-bottom: 7px;
     }
+
+    .profile-founder {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .profile-founder a {
+      color: var(--cyan);
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .profile-founder a:hover { opacity: 0.8; text-decoration: underline; }
 
     .profile-bio {
       font-size: 15px;
@@ -127,11 +159,19 @@
       margin-top: 10px;
     }
 
-    /* ── SEPARATOR ── */
+    /* ── SEPARATORS ── */
     .sep {
       height: 1px;
       background: var(--bdr);
       margin: 36px 0;
+    }
+
+    .sep-glow {
+      height: 1px;
+      border: none;
+      background: linear-gradient(to right, transparent,
+                  rgba(0,188,212,0.45), rgba(166,182,248,0.25), transparent);
+      margin: 34px 0;
     }
 
     /* ── SECTION LABEL ── */
@@ -146,19 +186,7 @@
 
     .block { margin-bottom: 40px; }
 
-    /* ── LET'S CHAT ── */
-    .chat-strip {
-      background: var(--dark-2);
-      border: 1px solid var(--bdr);
-      border-radius: 14px;
-      padding: 22px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
+    /* ── COPY BUTTON ── */
     .chat-q {
       font-size: 14px;
       font-weight: 600;
@@ -203,14 +231,13 @@
       border-color: rgba(76,175,80,0.25);
     }
 
-    /* hidden textarea for fallback copy */
     .copy-target {
       position: absolute;
       left: -9999px;
       top: -9999px;
     }
 
-    /* ── FEATURED CARD ── */
+    /* ── FEATURED CARD (products + free library) ── */
     .feat {
       display: block;
       background: var(--dark-2);
@@ -226,10 +253,21 @@
       transform: translateY(-2px);
     }
 
+    /* flagship variant — bigger, lit, for The Skill System */
+    .feat-flag {
+      background: linear-gradient(180deg, rgba(0,188,212,0.09), var(--dark-2) 60%);
+      border-color: rgba(0,188,212,0.4);
+      padding: 30px 26px;
+      box-shadow: 0 0 0 1px rgba(0,188,212,0.04), 0 18px 40px -28px rgba(0,188,212,0.5);
+    }
+
+    .feat-flag:hover { border-color: rgba(0,188,212,0.6); }
+
     .badge-row {
       display: flex;
       gap: 6px;
       margin-bottom: 12px;
+      flex-wrap: wrap;
     }
 
     .badge {
@@ -254,6 +292,18 @@
       border: 1px solid var(--bdr);
     }
 
+    .badge-price {
+      color: var(--dark);
+      background: var(--cyan);
+      border: 1px solid var(--cyan);
+    }
+
+    .badge-founding {
+      color: var(--lav);
+      background: rgba(166,182,248,0.12);
+      border: 1px solid rgba(166,182,248,0.28);
+    }
+
     .feat-title {
       font-size: 16px;
       font-weight: 700;
@@ -261,6 +311,8 @@
       letter-spacing: -0.015em;
       margin-bottom: 8px;
     }
+
+    .feat-flag .feat-title { font-size: 18px; }
 
     .feat-desc {
       font-size: 13px;
@@ -322,7 +374,7 @@
 
     .perch:hover .perch-btn { opacity: 0.88; }
 
-    /* ── MOST WANTED ── */
+    /* ── WORK-TOGETHER ROWS ── */
     .wanted-card {
       display: block;
       background: var(--dark-2);
@@ -352,6 +404,7 @@
       font-weight: 700;
       color: #fff;
       letter-spacing: -0.01em;
+      margin-bottom: 6px;
     }
 
     .wanted-arrow {
@@ -364,10 +417,32 @@
     .wanted-card:hover .wanted-arrow { color: var(--lav); }
 
     .wanted-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.55;
+      font-size: 12.5px;
+      color: var(--body);
+      line-height: 1.6;
     }
+
+    /* work-together CTA buttons */
+    .wt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 7px;
+      letter-spacing: -0.01em;
+      margin-top: 14px;
+      color: var(--dark);
+      transition: opacity 0.2s;
+    }
+
+    .wt-btn-cyan { background: var(--cyan); }
+    .wt-btn-lav  { background: var(--lav); }
+
+    .wanted-card:hover .wt-btn { opacity: 0.88; }
+    .wt-card-cyan:hover { border-color: rgba(0,188,212,0.3); }
+    .wt-card-lav:hover  { border-color: rgba(166,182,248,0.3); }
 
     /* ── NEWSLETTER ── */
     .nl-wrap {
@@ -521,20 +596,107 @@
 
     .nl-fallback-btn:hover { opacity: 0.85; }
 
-    /* Fix browser autofill: keep dark bg + white text */
-    .kit-override .formkit-input:-webkit-autofill,
-    .kit-override .formkit-input:-webkit-autofill:hover,
-    .kit-override .formkit-input:-webkit-autofill:focus,
-    .nl-fallback-input:-webkit-autofill,
-    .nl-fallback-input:-webkit-autofill:hover,
-    .nl-fallback-input:-webkit-autofill:focus { -webkit-text-fill-color:#fff!important; -webkit-box-shadow:0 0 0 1000px #2d3543 inset!important; box-shadow:0 0 0 1000px #2d3543 inset!important; caret-color:#fff!important; transition:background-color 9999s ease-in-out 0s!important; }
-
     .nl-trust {
       font-size: 11px;
       color: var(--muted);
       text-align: center;
       margin-top: 6px;
     }
+
+    /* ── CONTACT FORM ── */
+    .cf {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .cf-input, .cf-textarea {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      padding: 11px 15px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .cf-textarea { min-height: 104px; resize: vertical; line-height: 1.5; }
+    .cf-input:focus, .cf-textarea:focus { border-color: rgba(0,188,212,0.5); background: rgba(255,255,255,0.09); }
+    .cf-input::placeholder, .cf-textarea::placeholder { color: rgba(255,255,255,0.28); }
+
+    .cf-btn {
+      background: #00bcd4;
+      color: #1a202c;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      letter-spacing: -0.01em;
+      transition: opacity 0.2s;
+      margin-top: 2px;
+    }
+
+    .cf-btn:hover { opacity: 0.85; }
+    .cf-btn:disabled { opacity: 0.5; cursor: default; }
+
+    /* honeypot — off-screen, real people never see it */
+    .cf-hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cf-note {
+      font-size: 13px;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .cf-note.ok  { color: #4caf50; }
+    .cf-note.err { color: #ff6b6b; }
+
+    .cf-divider {
+      height: 1px;
+      background: var(--bdr);
+      margin: 20px 0 16px;
+    }
+
+    .cf-email {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .cf-email-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    /* Fix browser autofill: keep dark bg + white text */
+    .kit-override .formkit-input:-webkit-autofill,
+    .kit-override .formkit-input:-webkit-autofill:hover,
+    .kit-override .formkit-input:-webkit-autofill:focus,
+    .nl-fallback-input:-webkit-autofill,
+    .nl-fallback-input:-webkit-autofill:hover,
+    .nl-fallback-input:-webkit-autofill:focus,
+    .cf-input:-webkit-autofill,
+    .cf-input:-webkit-autofill:hover,
+    .cf-input:-webkit-autofill:focus,
+    .cf-textarea:-webkit-autofill { -webkit-text-fill-color:#fff!important; -webkit-box-shadow:0 0 0 1000px #2d3543 inset!important; box-shadow:0 0 0 1000px #2d3543 inset!important; caret-color:#fff!important; transition:background-color 9999s ease-in-out 0s!important; }
 
     /* ── LIVE ── */
     .live {
@@ -602,6 +764,8 @@
       gap: 8px;
     }
 
+    .social-grid.three { grid-template-columns: repeat(3, 1fr); }
+
     .soc {
       display: flex;
       align-items: center;
@@ -617,6 +781,14 @@
     .soc:hover {
       border-color: rgba(255,255,255,0.16);
       transform: translateY(-1px);
+    }
+
+    /* vertical compact variant for the 3-up row */
+    .soc-v {
+      flex-direction: column;
+      text-align: center;
+      gap: 9px;
+      padding: 18px 10px;
     }
 
     .soc-icon {
@@ -654,7 +826,30 @@
       color: var(--muted);
     }
 
-    /* hidden textarea for copy fallback */
+    .foot-links {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .foot-links a { color: var(--muted); transition: color 0.2s; }
+    .foot-links a:hover { color: var(--cyan); }
+
+    /* Hide the reCAPTCHA v3 badge (loaded by the Kit newsletter embed). Google's terms
+       allow hiding it as long as the attribution line below stays visible in the footer. */
+    .grecaptcha-badge { visibility: hidden; }
+
+    .foot-recaptcha {
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.22);
+      max-width: 360px;
+      margin: 10px auto 0;
+    }
+
+    .foot-recaptcha a { color: rgba(255,255,255,0.35); text-decoration: underline; }
+    .foot-recaptcha a:hover { color: var(--cyan); }
+
     textarea.copy-target {
       position: fixed;
       top: -9999px;
@@ -664,8 +859,9 @@
 
     @media (max-width: 480px) {
       .page { padding: 56px 20px 64px; }
-      .chat-strip { flex-direction: column; align-items: flex-start; }
       .social-grid { grid-template-columns: 1fr; }
+      .social-grid.three { grid-template-columns: repeat(3, 1fr); }
+      .cf-email { flex-direction: column; align-items: flex-start; }
     }
 
   </style>
@@ -680,6 +876,9 @@
 
 <div class="page">
 
+  <!-- HERO SPOTLIGHT -->
+  <div class="spotlight" aria-hidden="true"></div>
+
   <!-- PROFILE -->
   <div class="profile">
     <div class="avatar">
@@ -687,97 +886,21 @@
     </div>
     <h1 class="profile-name">Tamas Mihaly</h1>
     <p class="profile-handle">@tamasmihalyai</p>
-    <p class="profile-role">AI Trainer &amp; Consultant &nbsp;·&nbsp; Full-Stack Marketer</p>
+    <p class="profile-role">AI Trainer &amp; Consultant &nbsp;·&nbsp; AI-Native Full-Stack Marketer</p>
+    <p class="profile-founder">Founder of <a href="https://thrivingcolibri.ai" target="_blank" rel="noopener">Thriving Colibri</a> &amp; <a href="https://perch.marketing" target="_blank" rel="noopener" class="perch-link">Perch</a></p>
     <p class="profile-bio">
-      I don't just talk about marketing and AI. I do it every day across my own businesses and real clients.
+      I work with marketing and AI every day, across my own businesses and real clients.
       <em>And I show you exactly what I find.</em>
     </p>
   </div>
 
-  <!-- LET'S CHAT -->
-  <div class="block">
-    <p class="label">Let's Chat</p>
-    <div class="chat-strip">
-      <div>
-        <p class="chat-q">Want to chat or have any questions?</p>
-        <a href="mailto:hello@thrivingcolibri.ai" class="chat-email">hello@thrivingcolibri.ai</a>
-      </div>
-      <button class="copy-btn" id="copyBtn" onclick="copyEmail()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
-        </svg>
-        Copy Email
-      </button>
-    </div>
-  </div>
+  <div class="sep-glow"></div>
 
-  <div class="sep"></div>
-
-  <!-- FREE RESOURCES -->
-  <div class="block">
-    <p class="label">Free Resources</p>
-    <a href="https://tamasmihalyai.vercel.app/resources" class="feat">
-      <div class="badge-row">
-        <span class="badge badge-cyan">Free</span>
-        <span class="badge badge-grey">40+ Resources</span>
-      </div>
-      <div class="feat-title">Tamas's Free AI Resource Library</div>
-      <div class="feat-desc">A practical library of 40+ AI resources to help you use AI across real business and marketing work. Guides, prompts, SOPs, playbooks, workflows, checklists, workbooks, Notion templates, and AI assistants covering content, SEO, PPC, research, reporting, strategy, visual production, and team adoption.</div>
-      <div class="feat-btn">Get Free Access →</div>
-    </a>
-  </div>
-
-  <!-- PERCH -->
-  <div class="block">
-    <p class="label">Now Building</p>
-    <a href="https://perch.marketing" target="_blank" class="perch">
-      <div class="badge-row">
-        <span class="badge badge-lav">Waitlist Open</span>
-        <span class="badge badge-grey">Marketing Software</span>
-      </div>
-      <div class="feat-title">Perch — Marketing Reporting, Run From Claude</div>
-      <div class="feat-desc">The reporting cockpit I built to run AI-native marketing for my own clients. Connect Google Ads, GA4, Search Console and Meta, build white-label client dashboards, and pull live answers straight from Claude. Join the waitlist for early access.</div>
-      <div class="perch-btn">Join the Waitlist →</div>
-    </a>
-  </div>
-
-  <!-- MOST WANTED -->
-  <div class="block">
-    <p class="label">Most Wanted</p>
-
-    <a href="https://tamas-mihaly-ai.kit.com/claude-skills-for-marketing" target="_blank" class="wanted-card">
-      <div class="wanted-top">
-        <div class="wanted-title">Claude For Marketing Playbook</div>
-        <span class="wanted-arrow">→</span>
-      </div>
-      <div class="wanted-desc">A step-by-step guide to using Claude across your entire marketing function, from briefs to reports.</div>
-    </a>
-
-    <a href="https://tamas-mihaly-ai.kit.com/nano-banana-2-playbook" target="_blank" class="wanted-card">
-      <div class="wanted-top">
-        <div class="wanted-title">Nano Banana 2 Playbook</div>
-        <span class="wanted-arrow">→</span>
-      </div>
-      <div class="wanted-desc">How to generate consistent, on-brand AI visuals using the Nano Banana 2 style system.</div>
-    </a>
-
-    <a href="https://tamas-mihaly-ai.kit.com/humanizer-prompt" target="_blank" class="wanted-card">
-      <div class="wanted-top">
-        <div class="wanted-title">Humaniser Prompt System</div>
-        <span class="wanted-arrow">→</span>
-      </div>
-      <div class="wanted-desc">A prompt framework that strips the AI out of your content and puts your voice back in.</div>
-    </a>
-  </div>
-
-  <div class="sep"></div>
-
-  <!-- NEWSLETTER -->
+  <!-- NEWSLETTER (hero capture) -->
   <div class="block">
     <p class="label">Newsletter</p>
     <div class="nl-wrap">
-      <div class="nl-title">From The Field — <em>Twice A Week</em></div>
+      <div class="nl-title">From The Field &middot; <em>Twice A Week</em></div>
       <p class="nl-desc">Practical AI use cases and workflows for the marketer wearing multiple hats. What I'm actually using and finding from real client work and my own businesses, not a content calendar.</p>
 
       <!-- Kit embed -->
@@ -794,13 +917,72 @@
     </div>
   </div>
 
+  <!-- PRODUCTS — the ladder -->
+  <div class="block">
+    <p class="label">Get My Proven System</p>
+
+    <!-- Entry: Humanize Kit -->
+    <a href="/humanize-kit" class="feat">
+      <div class="badge-row">
+        <span class="badge badge-price">£29</span>
+        <span class="badge badge-grey">Start Here</span>
+      </div>
+      <div class="feat-title">The Humanize Kit</div>
+      <div class="feat-desc">AI that writes like you. Capture your voice once, and everything you write in Claude, ChatGPT or Codex comes out sounding like you. It's the fix for content that reads like AI wrote it. You get every update for life.</div>
+      <div class="feat-btn">Get the Kit →</div>
+    </a>
+
+    <!-- Flagship: The Skill System -->
+    <a href="/the-skill-system" class="feat feat-flag">
+      <div class="badge-row">
+        <span class="badge badge-price">£99</span>
+        <span class="badge badge-founding">Founding</span>
+        <span class="badge badge-cyan">Flagship</span>
+        <span class="badge badge-grey">For Marketing</span>
+      </div>
+      <div class="feat-title">The Skill System</div>
+      <div class="feat-desc">An AI marketing team you run yourself, in Claude Code or Codex. A set of agents that hand work down the line: skills like brand and voice, keyword research, content, humanizing, AI visibility, web design and paid search. Built and tested on real client work. The Humanize Kit is one of the skills inside it. Founding access is £99 with lifetime updates, including every skill on the roadmap, and it goes to £199 at full release.</div>
+      <div class="feat-btn">Get founding access →</div>
+    </a>
+  </div>
+
+  <!-- PERCH -->
+  <div class="block">
+    <p class="label">Now Building</p>
+    <a href="https://perch.marketing" target="_blank" rel="noopener" class="perch">
+      <div class="badge-row">
+        <span class="badge badge-lav">Waitlist Open</span>
+        <span class="badge badge-grey">Marketing Software</span>
+      </div>
+      <div class="feat-title">Perch: Marketing Reporting, Run From Claude</div>
+      <div class="feat-desc">The reporting tool I built to run AI-native marketing for my own clients. Connect Google Ads, GA4, Search Console and Meta, build white-label client dashboards, and pull live answers straight from Claude. Join the waitlist for early access.</div>
+      <div class="perch-btn">Join the Waitlist →</div>
+    </a>
+  </div>
+
+  <!-- FREE RESOURCES -->
+  <div class="block">
+    <p class="label">Free Resources</p>
+    <a href="/resources" class="feat">
+      <div class="badge-row">
+        <span class="badge badge-cyan">Free</span>
+        <span class="badge badge-grey">40+ Resources</span>
+      </div>
+      <div class="feat-title">Tamas's Free AI Resource Library</div>
+      <div class="feat-desc">A practical library of 40+ AI resources to help you use AI across real business and marketing work. Guides, prompts, SOPs, playbooks, workflows, checklists, workbooks, Notion templates, and AI assistants covering content, SEO, PPC, research, reporting, strategy, visual production, and team adoption.</div>
+      <div class="feat-btn">Get Free Access →</div>
+    </a>
+  </div>
+
+  <div class="sep"></div>
+
   <!-- TIKTOK LIVE -->
   <div class="block">
     <p class="label">TikTok Live</p>
-    <a href="https://www.tiktok.com/@tamasmihalyai" target="_blank" class="live">
+    <a href="https://www.tiktok.com/@tamasmihalyai" target="_blank" rel="noopener" class="live">
       <div class="live-top">
         <div class="dot"></div>
-        <span class="live-tag">Weekly Live — Coming Soon</span>
+        <span class="live-tag">Weekly Live &middot; Coming Soon</span>
       </div>
       <div class="live-title">Real work. Live on camera.</div>
       <div class="live-desc">Real AI workflows from actual client work. No script, no polish. Q&amp;A every session.</div>
@@ -809,36 +991,82 @@
 
   <div class="sep"></div>
 
-  <!-- CONNECT -->
+  <!-- WORK TOGETHER -->
+  <div class="block">
+    <p class="label">Work Together</p>
+
+    <a href="https://thrivingcolibri.ai/digital-marketing-services" target="_blank" rel="noopener" class="wanted-card wt-card-cyan">
+      <div class="wanted-title">Run your marketing the AI-native way</div>
+      <div class="wanted-desc">I run done-for-you AI-native marketing for businesses through my agency, Thriving Colibri. If you want me and my team on your marketing, start here.</div>
+      <div class="wt-btn wt-btn-cyan">Learn more →</div>
+    </a>
+
+    <a href="https://thrivingcolibri.ai/ai-training" target="_blank" rel="noopener" class="wanted-card wt-card-lav">
+      <div class="wanted-title">Train you or your team to be AI-native</div>
+      <div class="wanted-desc">Want your team doing this in-house? I train marketers and teams to use AI in their everyday work, the way I do it. Through Thriving Colibri.</div>
+      <div class="wt-btn wt-btn-lav">Learn more →</div>
+    </a>
+  </div>
+
+  <!-- GET IN TOUCH -->
+  <div class="block">
+    <p class="label">Get In Touch</p>
+    <div class="nl-wrap">
+      <div class="nl-title">Want to chat or have a question?</div>
+      <p class="nl-desc">Send me a message and it comes straight to me.</p>
+
+      <form class="cf" id="contactForm" novalidate>
+        <input class="cf-input" type="text" name="name" id="cfName" placeholder="Your name" autocomplete="name" maxlength="200" required>
+        <input class="cf-input" type="email" name="email" id="cfEmail" placeholder="your@email.com" autocomplete="email" maxlength="200" required>
+        <input class="cf-input" type="tel" name="phone" id="cfPhone" placeholder="Phone (optional)" autocomplete="tel" maxlength="60">
+        <textarea class="cf-textarea" name="message" id="cfMessage" placeholder="Your message" maxlength="5000" required></textarea>
+        <input class="cf-hp" type="text" name="company" id="cfCompany" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="cf-btn" type="submit" id="cfSubmit">Send message →</button>
+      </form>
+      <p class="cf-note" id="cfNote" role="status" aria-live="polite"></p>
+
+      <div class="cf-divider"></div>
+
+      <div class="cf-email">
+        <div>
+          <p class="cf-email-label">Want to email me directly?</p>
+          <a href="mailto:hello@thrivingcolibri.ai" class="chat-email">hello@thrivingcolibri.ai</a>
+        </div>
+        <button class="copy-btn" id="copyBtn" onclick="copyEmail()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+          </svg>
+          Copy Email
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LET'S CONNECT -->
   <div class="block">
     <p class="label">Let's Connect</p>
-    <div class="social-grid">
+    <div class="social-grid three">
 
-      <a href="https://www.tiktok.com/@tamasmihalyai" target="_blank" class="soc">
+      <a href="https://www.tiktok.com/@tamasmihalyai" target="_blank" rel="noopener" class="soc soc-v">
         <div class="soc-icon" style="background:rgba(255,255,255,0.05);">
           <svg viewBox="0 0 24 24" fill="#fff">
             <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/>
           </svg>
         </div>
-        <div>
-          <div class="soc-name">TikTok</div>
-          <div class="soc-handle">@tamasmihalyai</div>
-        </div>
+        <div class="soc-name">TikTok</div>
       </a>
 
-      <a href="https://linkedin.com/in/tamas-mihaly" target="_blank" class="soc">
+      <a href="https://linkedin.com/in/tamas-mihaly" target="_blank" rel="noopener" class="soc soc-v">
         <div class="soc-icon" style="background:rgba(10,102,194,0.15);">
           <svg viewBox="0 0 24 24" fill="#0a66c2">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
           </svg>
         </div>
-        <div>
-          <div class="soc-name">LinkedIn</div>
-          <div class="soc-handle">Tamas Mihaly</div>
-        </div>
+        <div class="soc-name">LinkedIn</div>
       </a>
 
-      <a href="https://www.instagram.com/tamasmihalyai" target="_blank" class="soc">
+      <a href="https://www.instagram.com/tamasmihalyai" target="_blank" rel="noopener" class="soc soc-v">
         <div class="soc-icon" style="background:rgba(225,48,108,0.08);">
           <svg viewBox="0 0 24 24" fill="url(#ig-g)">
             <defs>
@@ -853,22 +1081,7 @@
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
           </svg>
         </div>
-        <div>
-          <div class="soc-name">Instagram</div>
-          <div class="soc-handle">@tamasmihalyai</div>
-        </div>
-      </a>
-
-      <a href="mailto:hello@thrivingcolibri.ai" class="soc">
-        <div class="soc-icon" style="background:rgba(0,188,212,0.1);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#00bcd4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-          </svg>
-        </div>
-        <div>
-          <div class="soc-name">Email</div>
-          <div class="soc-handle">Get in touch</div>
-        </div>
+        <div class="soc-name">Instagram</div>
       </a>
 
     </div>
@@ -877,6 +1090,8 @@
   <!-- FOOTER -->
   <div class="foot">
     <p class="foot-text">© 2026 Tamas Mihaly</p>
+    <p class="foot-links"><a href="/privacy">Privacy</a> &nbsp;·&nbsp; <a href="/terms">Terms</a></p>
+    <p class="foot-recaptcha">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
   </div>
 
 </div>
@@ -914,6 +1129,62 @@
       }
     }
   }
+
+  // Contact form -> /api/contact (Resend on Vercel). Static preview has no function,
+  // so a local submit shows the error path; the real send works once deployed.
+  (function() {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+    var formReadyAt = Date.now(); // time-trap baseline: bots submit almost instantly
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var note = document.getElementById('cfNote');
+      var btn = document.getElementById('cfSubmit');
+      var payload = {
+        name: document.getElementById('cfName').value.trim(),
+        email: document.getElementById('cfEmail').value.trim(),
+        phone: document.getElementById('cfPhone').value.trim(),
+        message: document.getElementById('cfMessage').value.trim(),
+        company: document.getElementById('cfCompany').value.trim(),
+        elapsed: Date.now() - formReadyAt
+      };
+      note.className = 'cf-note';
+      note.textContent = '';
+      if (!payload.name || !payload.email || !payload.message) {
+        note.className = 'cf-note err';
+        note.textContent = 'Please add your name, email and a message.';
+        return;
+      }
+      var original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, d: d }; }); })
+      .then(function(res) {
+        if (res.ok && res.d && res.d.ok) {
+          form.reset();
+          note.className = 'cf-note ok';
+          note.textContent = "Thanks, got it. I'll get back to you soon.";
+          btn.textContent = 'Sent ✓';
+        } else {
+          note.className = 'cf-note err';
+          note.textContent = (res.d && res.d.error) || 'Could not send. Please email me directly.';
+          btn.disabled = false;
+          btn.textContent = original;
+        }
+      })
+      .catch(function() {
+        note.className = 'cf-note err';
+        note.textContent = 'Could not send. Please email me directly.';
+        btn.disabled = false;
+        btn.textContent = original;
+      });
+    });
+  })();
 
   // Hide fallback form once Kit script has loaded and rendered
   window.addEventListener('load', function() {

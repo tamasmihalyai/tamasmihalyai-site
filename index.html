@@ -908,12 +908,16 @@
         <script async data-uid="71994beb42" src="https://tamas-mihaly-ai.kit.com/71994beb42/index.js"></script>
       </div>
 
-      <!-- Fallback form shown until Kit script loads -->
-      <div class="nl-fallback" id="nlFallback">
+      <!-- Fallback: starts HIDDEN, revealed by JS only if the Kit embed is slow or blocked.
+           Hidden-by-default is what stops the two-fields-on-load flicker. See the script below. -->
+      <div class="nl-fallback" id="nlFallback" style="display:none;">
         <input class="nl-fallback-input" type="email" placeholder="your@email.com">
         <button class="nl-fallback-btn" onclick="window.open('https://tamas-mihaly-ai.kit.com/','_blank')">Subscribe Free →</button>
         <p class="nl-trust">No spam. Unsubscribe any time.</p>
       </div>
+      <noscript>
+        <a class="nl-fallback-btn" style="display:block;text-align:center;text-decoration:none;" href="https://tamas-mihaly-ai.kit.com/" target="_blank" rel="noopener">Subscribe Free →</a>
+      </noscript>
     </div>
   </div>
 
@@ -1186,15 +1190,43 @@
     });
   })();
 
-  // Hide fallback form once Kit script has loaded and rendered
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      var kitForm = document.querySelector('#kitContainer .formkit-form');
-      if (kitForm) {
-        document.getElementById('nlFallback').style.display = 'none';
-      }
-    }, 2500);
-  });
+  // Newsletter: the Kit embed renders its own form (.formkit-form) into #kitContainer.
+  // The fallback starts hidden so it never double-stacks under the Kit form. We watch for
+  // the Kit form and keep the fallback hidden the instant it appears; we reveal the fallback
+  // ONLY if Kit hasn't rendered after a few seconds (slow or blocked), and hide it again if
+  // Kit shows up late. This is the fix for the two-fields-on-load flicker — do not gate the
+  // hide on a fixed delay, and do not show the fallback by default.
+  (function() {
+    var fallback = document.getElementById('nlFallback');
+    var container = document.getElementById('kitContainer');
+    if (!fallback || !container) return;
+
+    var done = false, observer, pollId, slowId, hardId;
+    function kitReady() { return !!container.querySelector('.formkit-form'); }
+    function stop() {
+      if (observer) observer.disconnect();
+      if (pollId) clearInterval(pollId);
+      clearTimeout(slowId);
+      clearTimeout(hardId);
+    }
+    function kitTookOver() {          // Kit form is in: show only it
+      if (done) return;
+      done = true;
+      fallback.style.display = 'none';
+      stop();
+    }
+    function revealFallback() {       // Kit slow/blocked: give people a way to subscribe
+      if (!done) fallback.style.display = 'flex';
+    }
+
+    if (kitReady()) { kitTookOver(); return; }
+
+    observer = new MutationObserver(function() { if (kitReady()) kitTookOver(); });
+    observer.observe(container, { childList: true, subtree: true });
+    pollId = setInterval(function() { if (kitReady()) kitTookOver(); }, 200);
+    slowId = setTimeout(revealFallback, 3000);   // no Kit form yet -> reveal fallback
+    hardId = setTimeout(stop, 15000);            // stop watching eventually
+  })();
 </script>
 
 </body>

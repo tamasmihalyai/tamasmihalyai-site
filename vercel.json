@@ -5,11 +5,12 @@
     { "source": "/skills-system-guide", "destination": "/skills-system-guide.html" },
     { "source": "/humanize-kit", "destination": "/humanize-kit.html" },
     { "source": "/humanize-kit-thank-you", "destination": "/humanize-kit-thank-you.html" },
+    { "source": "/the-skill-system", "destination": "/the-skill-system.html" },
+    { "source": "/the-skill-system-thank-you", "destination": "/the-skill-system-thank-you.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
     { "source": "/terms", "destination": "/terms.html" }
   ],
   "redirects": [
-    { "source": "/call", "destination": "https://calendar.app.google/P27zCWPyZ1RMypFTA", "permanent": false },
-    { "source": "/the-skill-system", "destination": "https://thrivingcolibri.ai", "permanent": false }
+    { "source": "/call", "destination": "https://calendar.app.google/P27zCWPyZ1RMypFTA", "permanent": false }
   ]
 }

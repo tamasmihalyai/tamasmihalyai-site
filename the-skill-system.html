@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Skill System — an AI marketing team you run yourself | Tamas Mihaly AI</title>
+<meta name="description" content="A set of AI marketing agents you run in Claude Code or Codex. Agentic, AI-native marketing, built and tested on real client work. Founding access £99, lifetime updates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dark:#1a202c; --dark-2:#232b3a; --dark-3:#2b3445; --band:#151b26;
+    --white:#fff;
+    --cyan:#00bcd4; --cyan-2:#22d3ee; --green:#34d399;
+    --lav:#a6b6f8; --lav-2:#8b9cf0;
+    --body:rgba(255,255,255,.70); --muted:rgba(255,255,255,.42); --faint:rgba(255,255,255,.26);
+    --bdr:rgba(255,255,255,.08); --bdr-2:rgba(255,255,255,.14);
+    --amber:#fbbf24; --amber-soft:rgba(251,191,36,.12);
+    --cyan-glow:rgba(0,188,212,.10); --cyan-line:rgba(0,188,212,.22);
+    --shadow:0 24px 60px -22px rgba(0,0,0,.7);
+    --r:16px; --r-lg:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--body);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{color:#fff;line-height:1.12;letter-spacing:-.025em;font-weight:800}
+  a{color:var(--cyan);text-decoration:none}
+  strong{color:#fff;font-weight:700}
+  .serif{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:0;color:var(--lav)}
+  .mono{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .narrow{max-width:800px;margin-left:auto;margin-right:auto}
+  section{position:relative}
+
+  .label{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--lav);display:inline-flex;align-items:center;gap:9px}
+  .label.line::before{content:"";width:24px;height:2px;background:var(--lav);opacity:.6;border-radius:2px}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:16px;padding:14px 24px;border-radius:11px;border:1.5px solid transparent;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease;white-space:nowrap}
+  .btn-primary{background:var(--cyan);color:#08222a;box-shadow:0 14px 40px -12px rgba(0,188,212,.6)}
+  .btn-primary:hover{transform:translateY(-2px);background:#1ccbe2;box-shadow:0 20px 52px -12px rgba(0,188,212,.75)}
+  .btn-lg{font-size:18px;padding:17px 30px}
+  .btn .ar{transition:transform .18s ease}
+  .btn:hover .ar{transform:translateX(3px)}
+
+  /* nav — simplified */
+  .nav{position:sticky;top:0;z-index:50;background:rgba(26,32,44,.8);backdrop-filter:saturate(160%) blur(14px);border-bottom:1px solid var(--bdr)}
+  .nav .row{display:flex;align-items:center;gap:18px;height:66px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;color:#fff;letter-spacing:-.01em;font-size:16px}
+  .brand img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1.5px solid var(--cyan-line)}
+  .brand .fallback{width:34px;height:34px;border-radius:50%;display:none;place-items:center;background:var(--dark-2);border:1.5px solid var(--cyan-line);color:var(--cyan);font-weight:800;font-size:14px}
+  .nav .btn{margin-left:auto;padding:10px 20px;font-size:14.5px}
+
+  /* hero */
+  .hero{padding:74px 0 0;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:-160px 0 auto;height:820px;z-index:0;pointer-events:none;
+    background:radial-gradient(620px 420px at 80% 2%,rgba(0,188,212,.20),transparent 60%),radial-gradient(560px 460px at 4% 26%,rgba(166,182,248,.16),transparent 60%);}
+  .hero .wrap{position:relative;z-index:1}
+  .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;padding-bottom:44px}
+  .hero h1{font-size:clamp(38px,5.2vw,62px);font-weight:900;letter-spacing:-.035em;color:#fff}
+  .hero h1 .hl{color:var(--cyan)}
+  .hero .lede{font-size:19.5px;margin:22px 0 6px;max-width:31em;color:var(--body)}
+  .hero .lede .serif{font-size:20.5px}
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px;align-items:center}
+  .hero .micro{font-size:14.5px;color:var(--muted);margin-top:18px;display:flex;gap:9px;align-items:flex-start;max-width:33em}
+  .hero .micro b{color:#fff;font-weight:600}
+  @media(max-width:920px){.hero .grid{grid-template-columns:1fr;gap:34px}.hero{padding:46px 0 0}}
+
+  .stack{position:relative}
+  .stack .mini{background:var(--dark-2);border:1px solid var(--bdr);border-radius:14px;padding:13px 15px;margin-bottom:10px;display:flex;align-items:center;gap:13px;transition:transform .2s ease,border-color .2s ease}
+  .stack .mini:hover{transform:translateX(6px);border-color:var(--cyan-line)}
+  .stack .mini .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:rgba(0,188,212,.08);border:1px solid var(--cyan-line);flex-shrink:0}
+  .stack .mini .nm{font-weight:700;color:#fff;font-size:14.5px}
+  .stack .mini .nm small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+  .stack .mini .pulse{margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(52,211,153,.5);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}60%{box-shadow:0 0 0 7px rgba(52,211,153,0)}}
+  .stack .conn{width:2px;height:13px;background:linear-gradient(var(--cyan-line),transparent);margin:-8px 0 -2px 33px}
+  .stack .vtag{position:absolute;right:-10px;top:40%;transform:rotate(3deg);background:var(--lav);color:#11151f;font-size:12px;font-weight:700;padding:8px 13px;border-radius:11px;box-shadow:var(--shadow);line-height:1.35}
+  .stack .vtag .serif{color:#11151f;font-size:13px}
+  @media(max-width:920px){.stack .vtag{display:none}}
+
+  /* strip — dark recessed band, flush with hero */
+  .strip{background:var(--band);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+  .strip .row{display:flex;flex-wrap:wrap;gap:10px 30px;justify-content:center;padding:16px 0;font-size:14px;color:var(--body)}
+  .strip .row span{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+  .strip .row .k{color:var(--green);font-weight:800}
+  .strip .row .sep{color:var(--faint)}
+
+  .sec{padding:78px 0}
+  .sec-head{max-width:760px;margin-bottom:38px}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-size:clamp(28px,3.6vw,40px);margin:15px 0 14px;font-weight:800;color:#fff}
+  .sec-head p{font-size:18px;color:var(--body)}
+  .sec.tint{background:linear-gradient(180deg,rgba(255,255,255,.018),transparent);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+  .lead-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:6px}
+  .lead-cols p{font-size:16px;color:var(--body)}
+  .lead-cols p+p{margin-top:0}
+  @media(max-width:760px){.lead-cols{grid-template-columns:1fr;gap:14px}}
+
+  /* roster */
+  .grouphd{display:flex;align-items:center;gap:14px;margin:6px 0 22px}
+  .grouphd h3{font-size:14px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+  .grouphd .count{font-size:12.5px;font-weight:700;color:var(--green);background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.28);padding:3px 11px;border-radius:99px}
+  .grouphd .count.soon{color:var(--amber);background:var(--amber-soft);border-color:rgba(251,191,36,.3)}
+  .grouphd .ln{flex:1;height:1px;background:var(--bdr)}
+  .roster{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+  @media(max-width:900px){.roster{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:580px){.roster{grid-template-columns:1fr}}
+  .skill{background:var(--dark-2);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;position:relative;overflow:hidden;transition:transform .18s ease,border-color .18s ease}
+  .skill::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--bar,var(--cyan))}
+  .skill:hover{transform:translateY(-4px);border-color:var(--cyan-line)}
+  .skill .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .skill .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:21px;background:rgba(255,255,255,.04);border:1px solid var(--bdr);flex-shrink:0}
+  .skill h4{font-size:14.5px;font-weight:700;color:#fff}
+  .skill .role{font-size:12px;color:var(--lav);font-weight:600;margin-top:2px}
+  .skill p{font-size:13.5px;color:var(--body);line-height:1.55}
+  .skill .live{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--green);display:flex;align-items:center;gap:5px}
+  .skill .live .d{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(52,211,153,.5);animation:pulse 2.4s infinite}
+  .skill.soon{background:rgba(255,255,255,.018);border-style:dashed}
+  .skill.soon::before{opacity:.5}
+  .skill.soon .ic{opacity:.7}
+  .skill.soon h4{color:rgba(255,255,255,.74)}
+  .skill.soon .role{color:var(--muted)}
+  .tag-soon{margin-left:auto;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--amber);background:var(--amber-soft);border:1px solid rgba(251,191,36,.3);padding:3px 9px;border-radius:99px}
+  .roster-note{margin-top:26px;text-align:center;font-size:15px;color:var(--muted)}
+  .roster-note b{color:#fff}
+
+  /* chain */
+  .chain-wrap{background:var(--dark-2);border:1px solid var(--bdr);border-radius:var(--r-lg);padding:30px 26px;margin-top:14px}
+  .chain{display:flex;align-items:stretch;flex-wrap:wrap;gap:10px}
+  .chain .node{flex:1;min-width:128px;background:var(--dark-3);border:1px solid var(--bdr);border-radius:13px;padding:13px}
+  .chain .node .ro{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--lav);font-weight:800}
+  .chain .node .nm{font-size:13px;font-weight:700;color:#fff;margin-top:4px}
+  .chain .arw{display:flex;align-items:center;color:var(--cyan);font-weight:800;font-size:18px}
+  @media(max-width:760px){.chain .arw{transform:rotate(90deg);width:100%;justify-content:center;height:14px}.chain .node{min-width:100%}}
+
+  /* pays off / mechanisms */
+  .mech{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .mcard{background:var(--dark-2);border:1px solid var(--bdr);border-radius:var(--r);padding:24px}
+  .mcard .mtag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-bottom:12px}
+  .mcard.skill-t .mtag{color:var(--cyan);background:rgba(0,188,212,.1);border:1px solid var(--cyan-line)}
+  .mcard.sys-t .mtag{color:var(--lav);background:rgba(166,182,248,.1);border:1px solid rgba(166,182,248,.3)}
+  .mcard h4{font-size:18px;margin-bottom:8px;color:#fff}
+  .mcard p{font-size:14.5px;color:var(--body)}
+  @media(max-width:680px){.mech{grid-template-columns:1fr}}
+
+  .proof{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+  .pc{border-radius:var(--r);padding:20px 22px;border:1px solid var(--bdr)}
+  .pc.bad{background:rgba(255,255,255,.02)}
+  .pc.good{background:linear-gradient(180deg,rgba(0,188,212,.08),var(--dark-2));border-color:var(--cyan-line)}
+  .pc .hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+  .pc .lab{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+  .pc.bad .lab{color:var(--muted)}.pc.good .lab{color:var(--cyan)}
+  .pc .score{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;padding:3px 10px;border-radius:99px}
+  .pc.bad .score{background:rgba(255,255,255,.06);color:var(--muted)}
+  .pc.good .score{background:var(--cyan);color:#08222a}
+  .pc q{quotes:none;font-style:italic;color:rgba(255,255,255,.86);font-size:15px;line-height:1.55;display:block}
+  @media(max-width:680px){.proof{grid-template-columns:1fr}}
+
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .pillar{background:var(--dark-2);border:1px solid var(--bdr);border-radius:var(--r);padding:22px}
+  .pillar .n{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cyan);font-weight:700}
+  .pillar h4{color:#fff;font-size:16px;margin:9px 0 7px}
+  .pillar p{font-size:14px;color:var(--body)}
+  @media(max-width:760px){.pillars{grid-template-columns:1fr}}
+
+  .cmp{width:100%;border-collapse:separate;border-spacing:0;margin-top:8px;border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;font-size:15px}
+  .cmp th{text-align:left;padding:15px 18px;font-size:14px;font-weight:800;background:rgba(255,255,255,.03);color:var(--muted)}
+  .cmp th.you{background:rgba(0,188,212,.1);color:var(--cyan)}
+  .cmp td{padding:14px 18px;border-top:1px solid var(--bdr);vertical-align:top;color:var(--body)}
+  .cmp td.you{background:rgba(0,188,212,.05);color:#fff;font-weight:600}
+  @media(max-width:620px){.cmp{font-size:13.5px}.cmp th,.cmp td{padding:11px 12px}}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .step{background:var(--dark-2);border:1px solid var(--bdr);border-radius:var(--r);padding:24px}
+  .step .num{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-weight:800;color:#08222a;background:var(--cyan);font-family:'JetBrains Mono',monospace;margin-bottom:14px}
+  .step h4{font-size:17px;margin-bottom:7px;color:#fff}
+  .step p{font-size:14.5px;color:var(--body)}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+
+  /* pricing */
+  .price-sec{overflow:hidden}
+  .price-sec::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(700px 360px at 50% -8%,rgba(0,188,212,.14),transparent 62%)}
+  .price-sec .wrap{position:relative;z-index:1}
+  .price-card{background:var(--dark-2);border:1px solid var(--cyan-line);border-radius:var(--r-lg);box-shadow:0 30px 80px -30px rgba(0,188,212,.4);max-width:880px;margin:0 auto;overflow:hidden}
+  .price-top{display:grid;grid-template-columns:1.1fr .9fr}
+  @media(max-width:760px){.price-top{grid-template-columns:1fr}}
+  .price-left{padding:34px}
+  .fpill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--lav);background:rgba(166,182,248,.12);border:1px solid rgba(166,182,248,.3);padding:5px 13px;border-radius:99px;margin-bottom:18px}
+  .price-now{display:flex;align-items:baseline;gap:12px}
+  .price-now .amt{font-size:58px;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1}
+  .price-now .was{font-size:18px;color:var(--muted)}
+  .price-sub{font-size:15px;color:var(--body);margin-top:8px}
+  .ladder{margin-top:22px;background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:13px;padding:15px 16px}
+  .ladder .bar{height:8px;border-radius:99px;background:linear-gradient(90deg,var(--cyan) 0 38%,var(--lav) 38% 100%);position:relative;margin:8px 0 12px}
+  .ladder .bar .pin{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--dark);border:3px solid var(--cyan)}
+  .ladder .bar .pin.b{left:34%;border-color:var(--lav)}
+  .ladder .lab{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+  .ladder .lab b{display:block;color:#fff;font-size:14px}
+  .price-right{padding:32px 34px;background:rgba(0,188,212,.04);border-left:1px solid var(--bdr)}
+  @media(max-width:760px){.price-right{border-left:none;border-top:1px solid var(--bdr)}}
+  .price-right h4{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--cyan);margin-bottom:14px}
+  .incl{list-style:none}
+  .incl li{display:flex;gap:11px;font-size:14.5px;color:#fff;margin-bottom:11px;align-items:flex-start}
+  .incl li .ck{color:var(--green);font-weight:800;flex-shrink:0;margin-top:1px}
+  .incl li.more{color:var(--lav)}
+  .incl li.more .ck{color:var(--lav)}
+  .price-foot{padding:24px 34px 30px;border-top:1px solid var(--bdr);text-align:center}
+  .price-foot .btn{width:100%;max-width:420px;justify-content:center}
+  .guarantee{display:inline-flex;align-items:center;gap:9px;margin-top:16px;font-size:14px;color:var(--body)}
+  .honest{max-width:680px;margin:26px auto 0;text-align:center;font-size:15px;color:var(--muted);font-family:'Fraunces',serif;font-style:italic}
+
+  .about{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--dark-2);border:1px solid var(--bdr);border-radius:var(--r-lg);padding:30px}
+  .about img{width:104px;height:104px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan-line)}
+  .about h3{font-size:21px;margin-bottom:10px;color:#fff}
+  .about p{font-size:15.5px;color:var(--body)}
+  @media(max-width:620px){.about{grid-template-columns:1fr;text-align:center}.about img{margin:0 auto}}
+
+  .faq{max-width:780px;margin:0 auto}
+  .faq details{background:var(--dark-2);border:1px solid var(--bdr);border-radius:13px;padding:4px 20px;margin-bottom:12px;transition:border-color .18s ease}
+  .faq details[open]{border-color:var(--cyan-line)}
+  .faq summary{list-style:none;cursor:pointer;font-weight:700;color:#fff;font-size:16.5px;padding:16px 0;display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary .pm{color:var(--cyan);font-weight:800;font-size:22px;transition:transform .2s ease;flex-shrink:0}
+  .faq details[open] summary .pm{transform:rotate(45deg)}
+  .faq .ans{padding:0 0 18px;font-size:15px;color:var(--body)}
+
+  .final{text-align:center;padding:84px 0;overflow:hidden}
+  .final::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(640px 340px at 50% 0,rgba(166,182,248,.14),transparent 60%)}
+  .final .wrap{position:relative;z-index:1}
+  .final h2{font-size:clamp(30px,4.4vw,46px);max-width:16em;margin:0 auto 16px;color:#fff}
+  .final p{font-size:19px;color:var(--body);max-width:34em;margin:0 auto 28px}
+
+  footer{background:var(--band);border-top:1px solid var(--bdr);padding:30px 0;font-size:13.5px;color:var(--faint)}
+  footer .ft{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+  footer a{color:var(--muted)}
+  footer a:hover{color:var(--cyan)}
+
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.stack .mini .pulse,.skill .live .d{animation:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV (simplified) -->
+<nav class="nav">
+  <div class="wrap row">
+    <a class="brand" href="#top">
+      <img src="tamas-mihaly-profile.png" alt="Tamas Mihaly" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+      <span class="fallback">TM</span>
+      Tamas Mihaly AI
+    </a>
+    <a class="btn btn-primary" href="#pricing">Get founding access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="label line">Agentic marketing, built as skills</span>
+        <h1 style="margin-top:16px">An AI marketing team you <span class="hl">run yourself.</span></h1>
+        <p class="lede">It's a set of marketing agents you run inside Claude Code or Codex. Each one does a real marketing job in your voice and on your brand, and they pass the work down the line the way a team would. <span class="serif">This is the AI-native way of working, and it's where marketing is going.</span></p>
+        <div class="cta-row">
+          <a class="btn btn-primary btn-lg" href="#pricing">Get founding access · £99 <span class="ar">→</span></a>
+        </div>
+        <div class="micro">🔓 <span><b>Founding price.</b> You get every skill that's built now, every one still coming, and every update as I improve them. For good.</span></div>
+      </div>
+
+      <div class="stack rv">
+        <div class="mini"><span class="ic">🧭</span><span class="nm">brand-context<small>captures the business once</small></span><span class="pulse"></span></div>
+        <div class="conn"></div>
+        <div class="mini"><span class="ic">🔍</span><span class="nm">keyword-research<small>what to rank for</small></span><span class="pulse"></span></div>
+        <div class="conn"></div>
+        <div class="mini"><span class="ic">✍️</span><span class="nm">content-creation<small>writes the piece</small></span><span class="pulse"></span></div>
+        <div class="conn"></div>
+        <div class="mini"><span class="ic">🧹</span><span class="nm">humanize<small>takes the AI out, scores it</small></span><span class="pulse"></span></div>
+        <div class="vtag">runs in <span class="serif">your</span> voice,<br>on your brand</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="wrap row">
+      <span><span class="k">9</span> skills built and running</span><span class="sep">·</span>
+      <span><span class="k">8</span> more on the way</span><span class="sep">·</span>
+      <span>Works in Claude Code and Codex</span><span class="sep">·</span>
+      <span><span class="k">Lifetime</span> updates</span><span class="sep">·</span>
+      <span>No subscription</span>
+    </div>
+  </div>
+</header>
+
+<!-- WHY THIS WORKS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label line">Why this works</span>
+      <h2 style="margin-top:14px">The agentic way of working, built for marketing.</h2>
+    </div>
+    <div class="lead-cols">
+      <p>Most people still use AI for marketing like a chatbot. One long prompt, one chat, and you're explaining your business again every single time. The agentic way is a step up. In a tool like Claude Code or Codex, the work gets saved as you go, in small files the system reads back, so it actually remembers your brand, your voice, and the last ten jobs you did. That's a big jump from a chatbot, and these skills are built for it.</p>
+      <p>And here's the part that matters most. I didn't build these in theory. They run on my own client work every week, I use them across my businesses, and I teach them in my training. So they're sharpened on real jobs, and they hold up when the work gets messy. That's the bit an off-the-shelf skill can never give you, because it's never been near a real brief.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT IS -->
+<section class="sec tint">
+  <div class="wrap narrow sec-head center">
+    <span class="label">What it actually is</span>
+    <h2 style="margin-top:14px">Ten years of marketing, packed into skills that run.</h2>
+    <p>Anyone can ask Claude to write a skill in a minute, and you'll get something generic back, because it knows nothing about your work. Mine carry over ten years of marketing, the freelance years, the in-house years and the agency years, with the decisions I learned the hard way on real jobs. What goes in a good brief. How to read what someone is actually searching for. What makes a line sound like a person. The skill is just where I keep all that. The experience is the thing you're paying for.</p>
+  </div>
+</section>
+
+<!-- BUILT FOR MARKETERS -->
+<section class="sec" id="built-for">
+  <div class="wrap">
+    <div class="sec-head center" style="max-width:660px">
+      <span class="label">Built for marketers</span>
+      <h2 style="margin-top:14px">Whoever's doing the marketing, this gives them a team.</h2>
+      <p>One marketer or a whole department, the system holds your brand and your voice and does the bulk of the work, so good marketing goes out faster.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar rv"><div class="n" style="font-size:24px;line-height:1">🧑‍💻</div><h4>Solo marketers</h4><p>You wear every hat. This puts a full marketing function behind you, so a team of one can ship like a team of ten.</p></div>
+      <div class="pillar rv"><div class="n" style="font-size:24px;line-height:1">🧰</div><h4>Freelancers</h4><p>Take on more clients without the quality slipping. One file per client keeps every brand and every voice straight.</p></div>
+      <div class="pillar rv"><div class="n" style="font-size:24px;line-height:1">🏢</div><h4>Agencies and in-house teams</h4><p>Everyone ships to the same standard. The brand and voice get captured once, so the whole team's work comes out sounding like one voice.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROSTER -->
+<section class="sec" id="skills">
+  <div class="wrap">
+    <div class="sec-head center" style="max-width:680px">
+      <span class="label">The roster</span>
+      <h2 style="margin-top:14px">What you get today, and what's coming.</h2>
+      <p>Buy in now and the built skills are yours straight away. Every skill on the roadmap drops into your library as it ships, at no extra cost.</p>
+    </div>
+
+    <div class="grouphd"><h3>In the system now</h3><span class="count">9 built</span><span class="ln"></span></div>
+    <div class="roster">
+      <div class="skill rv" style="--bar:#7c5cff"><div class="top"><span class="ic">🧭</span><div><h4 class="mono">brand-context</h4><div class="role">The foundation</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Captures the business once, the positioning, the audience, the offer, the look and the voice. Every other skill reads it first, so you never explain yourself twice.</p></div>
+      <div class="skill rv" style="--bar:#a78bfa"><div class="top"><span class="ic">🎙️</span><div><h4 class="mono">voice-fingerprint</h4><div class="role">The voice</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Captures how you actually write, from your real samples. Swap the file and the whole system writes as you, as your business, or as a client.</p></div>
+      <div class="skill rv" style="--bar:#22d3ee"><div class="top"><span class="ic">🔍</span><div><h4 class="mono">keyword-research</h4><div class="role">The researcher</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Turns a few seed ideas into a clustered, prioritised plan you'll actually use. It runs on DataForSEO, so it costs pennies. 400 keywords cost me 5p the other day.</p></div>
+      <div class="skill rv" style="--bar:#34d399"><div class="top"><span class="ic">🗺️</span><div><h4 class="mono">content-strategy</h4><div class="role">The strategist</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Decides what to make, who for, and in what order, then writes a proper brief for each piece. Get the brief thin and everything after it is thin.</p></div>
+      <div class="skill rv" style="--bar:#fbbf24"><div class="top"><span class="ic">✍️</span><div><h4 class="mono">content-creation</h4><div class="role">The writer</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Takes one brief and writes one finished piece, built to rank on Google and get picked up by AI answers. It runs the humanize pass at the end.</p></div>
+      <div class="skill rv" style="--bar:#a78bfa"><div class="top"><span class="ic">🧹</span><div><h4 class="mono">humanize</h4><div class="role">The editor</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Strips the AI tells out of a draft and proves it with a score, then rewrites toward your voice while it keeps every claim the same.</p></div>
+      <div class="skill rv" style="--bar:#f472b6"><div class="top"><span class="ic">🤖</span><div><h4 class="mono">aeo-ai-visibility</h4><div class="role">AI-visibility analyst</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Gets you mentioned by ChatGPT, Perplexity and Google's AI answers, then tracks whether it's working over time.</p></div>
+      <div class="skill rv" style="--bar:#fbbf24"><div class="top"><span class="ic">🎯</span><div><h4 class="mono">paid-search</h4><div class="role">Paid search</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Builds Google and Bing campaigns where every line answers a real pain point and matches the landing page, then exports the whole thing to a spreadsheet.</p></div>
+      <div class="skill rv" style="--bar:#22d3ee"><div class="top"><span class="ic">🎨</span><div><h4 class="mono">marketing-web-design</h4><div class="role">Designer and builder</div></div><span class="live"><span class="d"></span>LIVE</span></div><p>Builds the actual page, the landing pages, the service pages and the homepages, already on brand and built to convert. It reads your visual identity.</p></div>
+    </div>
+
+    <div class="grouphd" style="margin-top:40px"><h3>On the roadmap</h3><span class="count soon">8 shipping</span><span class="ln"></span></div>
+    <div class="roster">
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">📣</span><div><h4 class="mono">paid-social</h4><div class="role">Paid social</div></div><span class="tag-soon">Soon</span></div><p>Meta, LinkedIn and TikTok campaigns, with audience targeting, structure, budget tiers and a testing framework.</p></div>
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">📧</span><div><h4 class="mono">email-marketing</h4><div class="role">Email marketing</div></div><span class="tag-soon">Soon</span></div><p>Welcome, nurture and sales sequences in your voice, with the segmentation and automation logic that turns subscribers into customers.</p></div>
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">📈</span><div><h4 class="mono">conversion-optimisation</h4><div class="role">CRO</div></div><span class="tag-soon">Soon</span></div><p>Looks at a page or a funnel and gives you a ranked list of changes to test, from hierarchy to messaging to friction to CTAs.</p></div>
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">🖼️</span><div><h4 class="mono">ad-creative</h4><div class="role">Ad creative</div></div><span class="tag-soon">Soon</span></div><p>Hooks, angles, headlines and primary text at scale, on brand and built for proper creative testing.</p></div>
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">🤝</span><div><h4 class="mono">sales</h4><div class="role">Sales</div></div><span class="tag-soon">Soon</span></div><p>Turns your marketing context into conversations, with outreach, call prep, follow-ups and pipeline support, grounded in your offer.</p></div>
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">🔧</span><div><h4 class="mono">seo-audit</h4><div class="role">SEO audit</div></div><span class="tag-soon">Soon</span></div><p>A technical and on-page audit, the crawl and index issues, the metadata, the speed, with a prioritised list of what to fix first.</p></div>
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">📊</span><div><h4 class="mono">analytics</h4><div class="role">Analytics</div></div><span class="tag-soon">Soon</span></div><p>A tracking plan, GA4 and UTMs, and plain-English reporting on what's actually working across the funnel.</p></div>
+      <div class="skill soon rv" style="--bar:#fbbf24"><div class="top"><span class="ic">🕵️</span><div><h4 class="mono">competitor-research</h4><div class="role">Competitor research</div></div><span class="tag-soon">Soon</span></div><p>Maps who you're really up against, their positioning, their offers and their visibility, and shows you where the gaps are.</p></div>
+    </div>
+
+    <p class="roster-note">Buy at the founding price and you lock in <b>everything above</b>, built and coming, plus more as I build it. The library only grows.</p>
+  </div>
+</section>
+
+<!-- HOW THEY HAND OFF -->
+<section class="sec tint">
+  <div class="wrap">
+    <div class="sec-head center" style="max-width:640px">
+      <span class="label">How they hand off</span>
+      <h2 style="margin-top:14px">Each skill reads the one before it.</h2>
+      <p>That's what makes it work like a team. Each skill picks up where the last one left off, so the business only gets captured once and then flows all the way down the chain.</p>
+    </div>
+    <div class="chain-wrap rv">
+      <div class="chain">
+        <div class="node"><div class="ro">Foundation</div><div class="nm mono">brand-context</div></div>
+        <div class="arw">→</div>
+        <div class="node"><div class="ro">Research</div><div class="nm mono">keyword-research</div></div>
+        <div class="arw">→</div>
+        <div class="node"><div class="ro">Strategy</div><div class="nm mono">content-strategy</div></div>
+        <div class="arw">→</div>
+        <div class="node"><div class="ro">Write</div><div class="nm mono">content-creation</div></div>
+        <div class="arw">→</div>
+        <div class="node"><div class="ro">Edit</div><div class="nm mono">humanize</div></div>
+        <div class="arw">→</div>
+        <div class="node"><div class="ro">Get found</div><div class="nm mono">aeo-ai-visibility</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHERE IT PAYS OFF -->
+<section class="sec">
+  <div class="wrap narrow">
+    <div class="sec-head center">
+      <span class="label">Where it pays off</span>
+      <h2 style="margin-top:14px">Almost everything you ship starts as a draft. This gives you a better one.</h2>
+      <p>Think about what marketing actually puts out. Blog posts, emails, paid social ads, paid search ads. Nearly all of it is content, and all of it starts as a draft someone has to write and then fix. That's where this system earns its keep. It already holds your brand and your voice, and the way it's built, the first draft comes back close to done, so you edit less and you ship faster.</p>
+    </div>
+    <div class="mech rv">
+      <div class="mcard skill-t">
+        <span class="mtag">A skill</span>
+        <h4>The voice fingerprint</h4>
+        <p>It captures how you actually write, from your real samples. Every other skill reads it, so the writing comes back sounding like you and not a generic AI.</p>
+      </div>
+      <div class="mcard sys-t">
+        <span class="mtag">A way of working</span>
+        <h4>The refine loop</h4>
+        <p>It writes a draft, you talk back at it out loud, it writes a better one, and you do the final edit. Your feedback feeds back into your voice file, so the next first draft is already better. Most people freeze at a blank page but can talk for an hour about their own work, so with this you never start by writing.</p>
+      </div>
+    </div>
+
+    <div class="proof">
+      <div class="pc bad rv">
+        <div class="hd"><span class="lab">Straight out of ChatGPT</span><span class="score">47.0</span></div>
+        <q>"In today's fast-paced digital landscape, our cutting-edge platform empowers businesses to unlock their full potential. We're passionate about delivering world-class, innovative solutions that seamlessly streamline your workflow."</q>
+      </div>
+      <div class="pc good rv">
+        <div class="hd"><span class="lab">After the system</span><span class="score">0.0</span></div>
+        <q>"We make software that helps your team work faster. It handles the repetitive parts of your workflow, so you spend less time on busywork and more on the work that matters."</q>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILT TO LAST -->
+<section class="sec tint">
+  <div class="wrap">
+    <div class="sec-head" style="max-width:760px">
+      <span class="label line">Why this is built to last</span>
+      <h2 style="margin-top:14px">The agentic way of working is here to stay.</h2>
+      <p>Models keep changing, and they keep getting better. The tool everyone relies on today could be gone in a few months. The way of working underneath it doesn't move. As the models get stronger, the same system gets better with them, the same skills running on a better engine.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar rv"><div class="n">01</div><h4>One job per skill</h4><p>Small and sharp. Easy to trust, easy to fix, easy to join up into a chain.</p></div>
+      <div class="pillar rv"><div class="n">02</div><h4>Your brand and voice, captured once</h4><p>Set it up a single time. Every skill reads the same files, and so does every new one.</p></div>
+      <div class="pillar rv"><div class="n">03</div><h4>Runs in agentic tools</h4><p>Claude Code and Codex, where the work gets saved and read back. Swap the model, the system keeps running.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTION -->
+<section class="sec">
+  <div class="wrap narrow">
+    <div class="sec-head center">
+      <span class="label">"But I can just prompt this myself"</span>
+      <h2 style="margin-top:14px">You can, and you'll get partway, for one chat.</h2>
+      <p>I get why it looks the same from the outside. Here's where it isn't.</p>
+    </div>
+    <table class="cmp rv">
+      <thead><tr><th>Prompting it yourself</th><th class="you">The Skill System</th></tr></thead>
+      <tbody>
+        <tr><td>Lives in one chat, then it's gone</td><td class="you">Saved skills you reuse everywhere, forever</td></tr>
+        <tr><td>You explain your business every new chat</td><td class="you">Captured once, every skill reads it on its own</td></tr>
+        <tr><td>"Sound friendly"</td><td class="you">Anchored on your real, AI-free writing</td></tr>
+        <tr><td>One shot, you get what you get</td><td class="you">A refine loop until it actually sounds like you</td></tr>
+        <tr><td>No way to know if it worked</td><td class="you">A score, before and after</td></tr>
+        <tr><td>One prompt doing one thing</td><td class="you">A chain of agents that hand work down the line</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- HOW YOU RUN IT -->
+<section class="sec tint" id="how">
+  <div class="wrap">
+    <div class="sec-head center" style="max-width:660px">
+      <span class="label">How you run it</span>
+      <h2 style="margin-top:14px">No code. If you can type a message, you can run this.</h2>
+      <p>It's built for Claude Code, where it works best, and it runs in Codex and the Claude app too. There's a step-by-step for each.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv"><div class="num">1</div><h4>Set up your brand and voice, once</h4><p>Feed it a few things you actually wrote and your existing pages, and it builds the files every other skill reads.</p></div>
+      <div class="step rv"><div class="num">2</div><h4>Run a skill</h4><p>Ask in plain English. Need a content plan, a page, a campaign? The right skill picks up your brand and voice and gets to work.</p></div>
+      <div class="step rv"><div class="num">3</div><h4>Refine, then ship</h4><p>Talk back at the draft, let it redo it, do the final read. The judgement and the last call stay yours.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec price-sec" id="pricing">
+  <div class="wrap">
+    <div class="sec-head center" style="max-width:620px">
+      <span class="label">Founding access</span>
+      <h2 style="margin-top:14px">One price. The whole system, now and as it grows.</h2>
+      <p>The system isn't finished, and that's the deal. You buy in at the founding price while I'm still building it, you keep every skill that lands, and you never pay the difference.</p>
+    </div>
+
+    <div class="price-card rv">
+      <div class="price-top">
+        <div class="price-left">
+          <span class="fpill">🔓 Founding · early access</span>
+          <div class="price-now"><span class="amt">£99</span><span class="was">then £199 at full release</span></div>
+          <p class="price-sub">One time. No subscription. You own the files.</p>
+          <div class="ladder">
+            <div class="bar"><span class="pin" style="left:0"></span><span class="pin b"></span></div>
+            <div class="lab">
+              <span><b>£99 today</b>9 skills plus the roadmap</span>
+              <span style="text-align:right"><b>£199 full release</b>17+ skills, more on the way</span>
+            </div>
+          </div>
+        </div>
+        <div class="price-right">
+          <h4>What's included</h4>
+          <ul class="incl">
+            <li><span class="ck">✓</span><span><b>All 9 built skills</b>, set up to run on your brand and your voice</span></li>
+            <li><span class="ck">✓</span><span><b>Every skill still coming</b>, free as it ships</span></li>
+            <li><span class="ck">✓</span><span><b>Lifetime updates.</b> Every time I sharpen a skill, you get it, for good</span></li>
+            <li class="more"><span class="ck">✓</span><span><b>More skills beyond the 17</b>, added as I build them</span></li>
+            <li><span class="ck">✓</span><span><b>The method</b>, how I build and fine-tune each one, if you want to build your own</span></li>
+            <li><span class="ck">✓</span><span><b>Runs in Claude Code and Codex</b></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="price-foot">
+        <!-- Stripe checkout (founding £99) -->
+        <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/eVq5kE01n3FQ1Hr9hCejK02">Get founding access · £99 <span class="ar">→</span></a>
+        <div style="margin-top:16px;font-size:13.5px;font-weight:600;color:var(--body);display:flex;gap:8px 14px;justify-content:center;flex-wrap:wrap;align-items:center">
+          <span>🔒 Secure checkout via Stripe</span><span style="color:var(--faint)">·</span>
+          <span>⚡ Delivered instantly</span><span style="color:var(--faint)">·</span>
+          <span>🛡️ 14-day money-back guarantee</span>
+        </div>
+        <div class="guarantee" style="font-size:13px;color:var(--muted)">Not for you? Email me within 14 days and I'll refund you in full.</div>
+      </div>
+    </div>
+
+    <p class="honest">One honest thing. The system gets you most of the way, fast, with every claim intact, but it won't do the final read for you. The judgement and the last call are yours. That's the point of it.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec">
+  <div class="wrap narrow">
+    <div class="about rv">
+      <img src="tamas-mihaly-profile.png" alt="Tamas Mihaly" onerror="this.style.display='none'">
+      <div>
+        <h3>I built this out of real work.</h3>
+        <p>I'm Tamas. I've done marketing for over ten years, freelance, in-house and agency, and these days I build AI into how the work gets done. I run my own marketing on this system, and my clients' work too. I didn't sit down to build skills, I did the actual jobs, an SEO audit, a client's content plan, a Google Ads build, and I made each skill out of that work, then sharpened it on the next one. That's the bit you can't fake, and it's what you're getting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec tint" id="faq">
+  <div class="wrap">
+    <div class="sec-head center" style="max-width:600px"><span class="label">Questions</span><h2 style="margin-top:14px">The honest answers.</h2></div>
+    <div class="faq">
+      <details open><summary>Do I need to know how to code?<span class="pm">+</span></summary><div class="ans">No. If you can type a message into Claude or Codex, you can run this. The manual walks you through setup, and you can ask the AI to install it for you in plain English.</div></details>
+      <details><summary>Where does it run, Claude or Codex?<span class="pm">+</span></summary><div class="ans">Both. It's built for Claude Code, where it works best, and it runs in Codex and the Claude app too. There's a step-by-step for each. It works the agentic way, so it saves your brand and voice as files and reads them back on every job.</div></details>
+      <details><summary>Is it a subscription?<span class="pm">+</span></summary><div class="ans">No. It's a one-time price and you own the files. The roadmap skills and the updates land in your library as they come, at no extra cost.</div></details>
+      <details><summary>What does "founding access" actually mean?<span class="pm">+</span></summary><div class="ans">The system is still being built. Founding members buy in now at £99, get the 9 built skills today, and get every skill on the roadmap free as it ships. When it's complete the price goes to £199, and founding members keep everything, with nothing more to pay. More skills keep coming after that too.</div></details>
+      <details><summary>What if the AI tools change?<span class="pm">+</span></summary><div class="ans">That's the whole point of building it the agentic way. The skills sit above any one model. One job each, your brand and voice captured once, your judgement on top. Swap the model and the system keeps running, and as the models get better the skills get better with them. You get those updates for life.</div></details>
+      <details><summary>What if I don't have writing samples?<span class="pm">+</span></summary><div class="ans">The system still works and gets you to clean, plain English. For the "sounds like you" part you give it a few real samples, even voice notes work. Two minutes and you've got your voice file.</div></details>
+      <details><summary>What exactly do I get?<span class="pm">+</span></summary><div class="ans">The built skill folders and the manual, in one download. New roadmap skills and updates get added to the same place as they come, and I'll let you know when they're in.</div></details>
+      <details><summary>Can I get a refund?<span class="pm">+</span></summary><div class="ans">Yes, 14 days. Try it, and if it's not for you, email me within 14 days and I'll give you your money back.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="wrap narrow">
+    <h2>Ready to become an AI-native marketer?</h2>
+    <p>The briefs, the content, the pages, the campaigns, the ads, all run by one AI system that already knows your brand and gets sharper every time you use it. You get a marketing team's output, and you keep the final call.</p>
+    <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/eVq5kE01n3FQ1Hr9hCejK02">Get founding access · £99 <span class="ar">→</span></a>
+  </div>
+</section>
+
+<!-- FOOTER (minimal) -->
+<footer>
+  <div class="wrap ft">
+    <span>© 2026 Tamas Mihaly · The Skill System</span>
+    <span>Questions? <a href="mailto:hello@thrivingcolibri.ai">hello@thrivingcolibri.ai</a></span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var els=document.querySelectorAll('.rv');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.12});
+    els.forEach(function(e){io.observe(e)});
+  })();
+</script>
+</body>
+</html>
